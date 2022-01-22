@@ -12,6 +12,14 @@ class PostTestCase(TestCase):
 
   def test_new_post_title(self):
     self.assertEqual(self.p2.title, self.flds[0])
+      def test_new_post_author(self):
+    self.assertEqual(self.p2.author, self.p.author)
+
+  def test_new_post_summary(self):
+    self.assertEqual(self.summary, self.flds[1])
+
+  def test_new_post_content(self):
+    self.assertEqual(self.summary, self.flds[2])
 
 class PostCommentTestCase(TestCase):
   p=Post.objects.first()
