@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% load blog_extras %}
+{% block content %}
+    <h2>Blog Posts</h2>
+    {% for post in posts %}
+    <div class="row">
+        <div class="col">
+            <h3>{{ post.title }}</h3>
+            <small>By {{ post.author|author_details }} on {{ post.published_at|date:"M, d Y" }}</small>
+            <p>{{ post.summary }}</p>
+            <p>
+                ({{ post.content|wordcount }} words)
+                <a href="#">Read More</a>
+            </p>
+        </div>
+    </div>
+    {% endfor %}
+{% endblock %}
