@@ -4,13 +4,13 @@
     {% for post in posts %}
     <div class="row">
         <div class="col">
-            <h3>{{ post.title }}</h3>
-            <small>By {{ post.author|author_details:request.user }} on {{ post.published_at|date:"M, d Y" }}</small>
+        <h3>{{ post.title }}</h3>
+            {% include "blog/post-byline.html" %} 
             <p>{{ post.summary }}</p>
             <p>
                 ({{ post.content|wordcount }} words)
-                <a href="#">Read More</a>
-            </p>
+                <a href="{% url "blog-post-detail" post.slug %}">Read More</a
+            </p> 
         </div>
     </div>
     {% endfor %}
