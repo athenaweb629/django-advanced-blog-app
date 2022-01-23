@@ -6,7 +6,7 @@
     <div class="row">
         <div class="col">
             <h3>{{ post.title }}</h3>
-            <small>By {{ post.author|author_details }} on {{ post.published_at|date:"M, d Y" }}</small>
+            <small>By {{ post.author|author_details:request.user }} on {{ post.published_at|date:"M, d Y" }}</small>
             <p>{{ post.summary }}</p>
             <p>
                 ({{ post.content|wordcount }} words)
