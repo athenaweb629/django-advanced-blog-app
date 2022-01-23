@@ -1,4 +1,7 @@
 from django.shortcuts import render
+from blog.models import Post
+from django.utils import time zone
 
-def index(request):
-    return render(request, "blog/index.html")
+def index(request): 
+    posts = Post.objects.filter(published_at__lte=timezone.now()) 
+    return render(request, "blog/index.html", {"posts": posts})
