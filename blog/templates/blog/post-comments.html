@@ -24,7 +24,7 @@
           <h4>Add Comment</h4>
           <form method="post">
               {% csrf_token %}
-              {{ comment_form.as_p }}
+              {{ comment_form|crispy }}
               <p>
               <button type="submit" class="btn btn-primary">Submit</button> </p>
           </form>
