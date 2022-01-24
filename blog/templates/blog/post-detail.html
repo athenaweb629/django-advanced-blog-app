@@ -13,6 +13,10 @@
         {{ post.content|safe }}
     {% endcol %}
 {% endrow %}
+
+<!-- Comment Form -->
+{% include "blog/post-comments.html" %}
+
 <!-- Most Recent Blog Posts -->
 {% row %}
     {% col %}
