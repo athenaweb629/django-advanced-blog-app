@@ -1,6 +1,8 @@
-from django.shortcuts import render, get_object_or_404
-from blog.models import Post
+from django.shortcuts import redirect, render, get_object_or_404
 from django.utils import timezone
+
+from blog.models import Post
+from blog.forms import CommentForm
 
 
 # Index Page for Blog
@@ -16,8 +18,7 @@ def index(request):
 def post_detail(request, slug):
     # Returns the Post Content field
     post = get_object_or_404(Post, slug=slug)
-
-
+    
     # Create a Comment using the posted form data\
     # Return the comment / post view
 
@@ -39,4 +40,4 @@ def post_detail(request, slug):
     else:
         comment_form = None
 
-    return render(request, "blog/post-detail.html", {"post":post})
+    return render(request, "blog/post-detail.html", {"post": post, "comment_form": comment_form})
