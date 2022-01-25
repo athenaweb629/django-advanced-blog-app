@@ -100,13 +100,7 @@ class Dev(Configuration):
   # mysql://username:password@mysql-host.example.com:3306/db_name?option1=value1&option2=value2
 
   # How we would make use of different databases with django configurations
-  DATABASES = {
-    "default": dj_database_url.config(default=f"sqlite:///{BASE_DIR}/db.sqlite3"),
-    "alternative": dj_database_url.config(
-        "ALTERNATIVE_DATABASE_URL",
-        default=f"sqlite:///{BASE_DIR}/alternative_db.sqlite3",
-    ),
-}
+  DATABASES = values.DatabaseURLValue(f"sqlite:///{BASE_DIR}/db.sqlite3")
 
 
   # Password validation
