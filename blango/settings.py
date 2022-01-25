@@ -1,6 +1,7 @@
 import os
 from pathlib import Path
 from configurations import Configuration
+from configurations import values
 
 """
 Django settings for blango project.
@@ -120,7 +121,7 @@ class Dev(Configuration):
 
   LANGUAGE_CODE = 'en-us'
 
-  TIME_ZONE = 'UTC'
+  TIME_ZONE = values.Value("UTC", environ_prefix="BLANGO")
 
   USE_I18N = True
 
