@@ -2,6 +2,7 @@ import os
 from pathlib import Path
 from configurations import Configuration
 from configurations import values
+import dj_database_url
 
 """
 Django settings for blango project.
@@ -27,9 +28,11 @@ class Dev(Configuration):
   SECRET_KEY = 'django-insecure-+sn%dpa!086+g+%44z9*^j^q-u4n!j(#wl)x9a%_1op@zz2+1-'
 
   # SECURITY WARNING: don't run with debug turned on in production!
-  DEBUG = True
+  DEBUG = values.BooleanValue(True)
 
-  ALLOWED_HOSTS = ['*']
+  ALLOWED_HOSTS = values.ListValue(["localhost", "0.0.0.0", ".codio.io"])
+  # Equivalent way of setting the above values as an env_var:
+  # ALLOWED_HOSTS=localhost,0.0.0.0,.codio.io python3 manage.py runserver 0.0.0.0:8000
   X_FRAME_OPTIONS = 'ALLOW-FROM ' + os.environ.get('CODIO_HOSTNAME') + '-8000.codio.io'
   CSRF_COOKIE_SAMESITE = None
   CSRF_TRUSTED_ORIGINS = [os.environ.get('CODIO_HOSTNAME') + '-8000.codio.io']
@@ -89,12 +92,21 @@ class Dev(Configuration):
   # Database
   # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
+
+  # Dj_Database_Url Module and the DatabaseURLValue Class
+  # https://github.com/kennethreitz/dj-database-url#url-schema
+
+  # Example URL schema to connect to a MySQL database:
+  # mysql://username:password@mysql-host.example.com:3306/db_name?option1=value1&option2=value2
+
+  # How we would make use of different databases with django configurations
   DATABASES = {
-      'default': {
-          'ENGINE': 'django.db.backends.sqlite3',
-          'NAME': BASE_DIR / 'db.sqlite3',
-      }
-  }
+    "default": dj_database_url.config(default=f"sqlite:///{BASE_DIR}/db.sqlite3"),
+    "alternative": dj_database_url.config(
+        "ALTERNATIVE_DATABASE_URL",
+        default=f"sqlite:///{BASE_DIR}/alternative_db.sqlite3",
+    ),
+}
 
 
   # Password validation
@@ -121,7 +133,7 @@ class Dev(Configuration):
 
   LANGUAGE_CODE = 'en-us'
 
-  TIME_ZONE = values.Value("UTC", environ_prefix="BLANGO")
+  TIME_ZONE = values.Value("UTC")
 
   USE_I18N = True
 
@@ -139,3 +151,9 @@ class Dev(Configuration):
   # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
   DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Production 
+class Prod(Dev):
+    DEBUG = False
+    # Prevent secret keys committed in code, from being used in production 
+    SECRET_KEY = values.SecretValue()
