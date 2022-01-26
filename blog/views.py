@@ -6,8 +6,8 @@ from blog.forms import CommentForm
 import logging
 
 from django.views.decorators.cache import cache_page
-django.views.decorators.vary.vary_on_headers
-django.views.decorators.vary.vary_on_cookie
+from django.views.decorators.vary import vary_on_headers
+from django.views.decorators.vary import vary_on_cookie
 
 # Logging
 logger = logging.getLogger(__name__)
