@@ -23,16 +23,28 @@ class Dev(Configuration):
   # Build paths inside the project like this: BASE_DIR / 'subdir'.
   BASE_DIR = Path(__file__).resolve().parent.parent
 
+  # Admin Settings 
+  ADMINS = [("Jordan Brocker Rudow", "jbrockerrudow@gmail.com")]
+
   # Logging Configuration Settings
   # This config sets up one handler with the ID console. 
   # The handler eill log to the console.
   LOGGING = {
       "version": 1,
       "disable_existing_loggers": False,
+      "filters": {
+          "require_debug_false": {
+              # Error Emails are only sent in production enviroments
+              # The class below only passes messages through when DEBUG is False.
+              "()": "django.utils.log.RequireDebugFalse",
+          },
+      },
       "formatters": {
           "verbose": {
               "format": "{levelname} {asctime} {module} {process:d} {thread:d} {message}",
-              # Outputs "INFO 2022-01-26 16:04:49,067 views 462 140309436626688 Created comment on Post 2 for user trianglium"
+              # Outputs the log level, time of the message (asctime), name of 
+              # the module that generated the message, the process ID, 
+              # thread ID, and lastly, the message.
               "style": "{",
           },
       },
@@ -42,11 +54,25 @@ class Dev(Configuration):
               "stream": "ext://sys.stdout",
               "formatter": "verbose",
           },
+          "mail_admins": {
+              "level": "ERROR", 
+              "class": "django.utils.log.AdminEmailHandler",
+              "filters": ["require_debug_false"],
+          },
+      },
+      "loggers": {
+          # Django.request so that only unhandled exceptions get sent.
+          "django.request": {
+              "handlers": ["mail_admins"],
+              "level": "ERROR",
+              # Add propagate: True; so the stack traces are logged to the console during development.
+              "propagate": True,
+          },
       },
       "root": {
           "handlers": ["console"],
           "level": "DEBUG",
-      }
+      },
   }
 
 
