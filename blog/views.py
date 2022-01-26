@@ -17,6 +17,11 @@ logger = logging.getLogger(__name__)
 # All other responses will come from the cache.
 @cache_page(300)
 def index(request): 
+    #  temporary change to return the current username logged in, 
+    # or AnonymousUser if no one is logged in.
+    from django.http import HttpResponse
+    return HttpResponse(str(request.user).encode("ascii"))
+
     # Returns Post title, Author, Datetime
     posts = Post.objects.filter(published_at__lte=timezone.now())
     # Log quantity of posts
