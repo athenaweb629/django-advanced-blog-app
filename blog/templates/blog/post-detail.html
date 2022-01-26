@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load blog_extras %}
+{% load blog_extras cache %}
 {% block content %} 
 <!-- Blog Title with preview ('content') of post -->
 <h2>{{ post.title }}</h2> 
@@ -20,7 +20,10 @@
 <!-- Most Recent Blog Posts -->
 {% row %}
     {% col %}
-        {% recent_posts post %}
+        <!-- Cache Recent Posts for One Hour -->
+        {% cache 3600 recent_posts %}
+            {% recent_posts post %}
+        {% endcache %}
     {% endcol %}
 {% endrow %}
 {% endblock %}
