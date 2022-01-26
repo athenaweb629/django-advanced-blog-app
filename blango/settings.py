@@ -159,6 +159,13 @@ class Dev(Configuration):
   # How we would make use of different databases with django configurations
   DATABASES = values.DatabaseURLValue(f"sqlite:///{BASE_DIR}/db.sqlite3")
 
+  # Password Hashing 
+  PASSWORD_HASHERS = [
+    'django.contrib.auth.hashers.PBKDF2PasswordHasher',
+    'django.contrib.auth.hashers.PBKDF2PasswordHasher',
+    'django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher',
+    'django.contrib.auth.hashers.BCryptSHA256PasswordHasher',
+  ]
 
   # Password validation
   # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
