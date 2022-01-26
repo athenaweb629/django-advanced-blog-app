@@ -3,7 +3,10 @@ from django.utils import timezone
 
 from blog.models import Post
 from blog.forms import CommentForm
+import logging
 
+# Logging
+logger = logging.getLogger(__name__)
 
 # Index Page for Blog
 
