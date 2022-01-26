@@ -6,6 +6,7 @@ from blog.forms import CommentForm
 import logging
 
 from django.views.decorators.cache import cache_page
+django.views.decorators.vary.vary_on_headers
 
 # Logging
 logger = logging.getLogger(__name__)
@@ -16,10 +17,13 @@ logger = logging.getLogger(__name__)
 # the template will only be rendered once every 5mins.
 # All other responses will come from the cache.
 @cache_page(300)
+@vary_on_headers("Cookie")
 def index(request): 
+    from django.http import HttpResponse
+    # log messages on first request for user
+    logger.debug("Index function is called!")
     #  temporary change to return the current username logged in, 
     # or AnonymousUser if no one is logged in.
-    from django.http import HttpResponse
     return HttpResponse(str(request.user).encode("ascii"))
 
     # Returns Post title, Author, Datetime
