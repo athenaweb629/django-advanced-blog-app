@@ -7,6 +7,7 @@ import logging
 
 from django.views.decorators.cache import cache_page
 django.views.decorators.vary.vary_on_headers
+django.views.decorators.vary.vary_on_cookie
 
 # Logging
 logger = logging.getLogger(__name__)
@@ -17,7 +18,7 @@ logger = logging.getLogger(__name__)
 # the template will only be rendered once every 5mins.
 # All other responses will come from the cache.
 @cache_page(300)
-@vary_on_headers("Cookie")
+@vary_on_cookie
 def index(request): 
     from django.http import HttpResponse
     # log messages on first request for user
