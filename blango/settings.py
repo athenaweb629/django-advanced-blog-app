@@ -3,6 +3,7 @@ from pathlib import Path
 from configurations import Configuration
 from configurations import values
 import dj_database_url
+import logging
 
 """
 Django settings for blango project.
@@ -16,9 +17,28 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
+# Development Configuration 
+
 class Dev(Configuration):
+  # Build paths inside the project like this: BASE_DIR / 'subdir'.
   BASE_DIR = Path(__file__).resolve().parent.parent
+
+  # Logging Configuration Settings
+  # This config sets up one handler with the ID console. 
+  # The handler eill log to the console.
+  LOGGING = {
+      "version": 1,
+      "disable_existing_loggers": False,
+      "handlers": {
+          "console": {"class": "logging.StreamHandler", "stream": "ext://sys.stdout"},
+      },
+      "root": {
+          "handlers": ["console"],
+          "level": "DEBUG",
+      }
+  }
+
+
 
 
   # Quick-start development settings - unsuitable for production

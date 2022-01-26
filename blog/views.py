@@ -12,7 +12,10 @@ logger = logging.getLogger(__name__)
 
 def index(request): 
     # Returns Post title, Author, Datetime
-    posts = Post.objects.filter(published_at__lte=timezone.now()) 
+    posts = Post.objects.filter(published_at__lte=timezone.now())
+    # Log quantity of posts
+    logger.debug("Got %d posts", len(posts))
+
     return render(request, "blog/index.html", {"posts": posts})
 
 
@@ -37,6 +40,8 @@ def post_detail(request, slug):
                 comment.content_object = post
                 comment.creator = request.user
                 comment.save()
+                # log a message when a comment is created (logs directly after saving comment)
+                logger.info("Created comment on Post %d for user %s", post.pk, request.user)
                 return redirect(request.path_info)
         else:
             comment_form = CommentForm()
