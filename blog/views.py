@@ -5,28 +5,11 @@ from blog.models import Post
 from blog.forms import CommentForm
 import logging
 
-from django.views.decorators.cache import cache_page
-from django.views.decorators.vary import vary_on_headers
-from django.views.decorators.vary import vary_on_cookie
-
 # Logging
 logger = logging.getLogger(__name__)
 
 # Index Page for Blog
-# Cache the response of Index View Every 5 minutes (300 secs)
-# The list of Post objects will only be queried once every 5mins and 
-# the template will only be rendered once every 5mins.
-# All other responses will come from the cache.
-@cache_page(300)
-@vary_on_cookie
 def index(request): 
-    from django.http import HttpResponse
-    # log messages on first request for user
-    logger.debug("Index function is called!")
-    #  temporary change to return the current username logged in, 
-    # or AnonymousUser if no one is logged in.
-    return HttpResponse(str(request.user).encode("ascii"))
-
     # Returns Post title, Author, Datetime
     posts = Post.objects.filter(published_at__lte=timezone.now())
     # Log quantity of posts
