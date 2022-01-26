@@ -5,11 +5,17 @@ from blog.models import Post
 from blog.forms import CommentForm
 import logging
 
+from django.views.decorators.cache import cache_page
+
 # Logging
 logger = logging.getLogger(__name__)
 
 # Index Page for Blog
-
+# Cache the response of Index View Every 5 minutes (300 secs)
+# The list of Post objects will only be queried once every 5mins and 
+# the template will only be rendered once every 5mins.
+# All other responses will come from the cache.
+@cache_page(300)
 def index(request): 
     # Returns Post title, Author, Datetime
     posts = Post.objects.filter(published_at__lte=timezone.now())
