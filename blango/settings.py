@@ -132,7 +132,7 @@ class Dev(Configuration):
   ]
 
   # The list of IP addresses that are allowed to use DJDT
-  INTERNAL_IPS = ["192.168.11.179"]
+  INTERNAL_IPS = ["192.168.10.93"]
 
   ROOT_URLCONF = 'blango.urls'
 
