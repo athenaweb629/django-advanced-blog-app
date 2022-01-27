@@ -113,9 +113,15 @@ class Dev(Configuration):
       'blog.apps.BlogConfig',
       'crispy_forms',
       'crispy_bootstrap5',
+      'debug_toolbar',
   ]
 
   MIDDLEWARE = [
+      # The order of MIDDLEWARE is important. You should include the Debug
+      # Toolbar middleware as early as possible in the list. However, it must
+      # come after any other middleware that encodes the response’s content,
+      # such as GZipMiddleware.
+      'debug_toolbar.middleware.DebugToolbarMiddleware',
       'django.middleware.security.SecurityMiddleware',
       'django.contrib.sessions.middleware.SessionMiddleware',
       'django.middleware.common.CommonMiddleware',
@@ -124,6 +130,9 @@ class Dev(Configuration):
       'django.contrib.messages.middleware.MessageMiddleware',
       #'django.middleware.clickjacking.XFrameOptionsMiddleware',
   ]
+
+  # The list of IP addresses that are allowed to use DJDT
+  INTERNAL_IPS = ["192.168.11.179"]
 
   ROOT_URLCONF = 'blango.urls'
 
