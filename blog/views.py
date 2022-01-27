@@ -8,6 +8,12 @@ import logging
 # Logging
 logger = logging.getLogger(__name__)
 
+# View to Return the IP addresss thats connected to Django
+# (Installing and Configuring Django Debug Toolbar)
+def get_ip(request):
+    from django.http import HttpResponse
+    return HttpResponse(request.META['REMOTE_ADDR'])
+
 # Index Page for Blog
 def index(request): 
     # Returns Post title, Author, Datetime
