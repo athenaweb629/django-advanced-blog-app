@@ -17,7 +17,15 @@ def get_ip(request):
 # Index Page for Blog
 def index(request): 
     # Returns Post title, Author, Datetime
-    posts = Post.objects.filter(published_at__lte=timezone.now())
+    #posts = Post.objects.filter(published_at__lte=timezone.now()).select_related("author")
+    posts = (
+    Post.objects.filter(published_at__lte=timezone.now())
+    .select_related("author")
+    .only("title", "summary", "content"))
+    posts = (
+    Post.objects.filter(published_at__lte=timezone.now())
+    .select_related("author")
+    .defer("created_at", "modified_at"))
     # Log quantity of posts
     logger.debug("Got %d posts", len(posts))
 

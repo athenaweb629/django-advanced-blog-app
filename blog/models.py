@@ -24,8 +24,8 @@ class Tag(models.Model):
 
 class Post(models.Model):
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.PROTECT)
-    created_at = models.DateTimeField(auto_now_add=True)
-    modified_at = models.DateTimeField(auto_now=True)
+    created_at = models.DateTimeField(auto_now_add=True,  db_index=True)
+    modified_at = models.DateTimeField(auto_now=True,  db_index=True)
     published_at = models.DateTimeField(blank=True, null=True, db_index=True)
     title = models.TextField(max_length=100)
     slug = models.SlugField()
