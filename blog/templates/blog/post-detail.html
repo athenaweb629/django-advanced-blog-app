@@ -13,6 +13,16 @@
         {{ post.content|safe }}
     {% endcol %}
 {% endrow %}
+<br>
+<!-- Author Profile Model and Bio -->
+{% if post.author.profile %}
+    {% row %}
+        {% col %}
+            <h4>About the author</h4>
+            <p>{{ post.author.profile.bio }}</p>
+        {% endcol %}
+    {% endrow %}
+{% endif %}
 
 <!-- Comment Form -->
 {% include "blog/post-comments.html" %}
