@@ -75,8 +75,9 @@ class Dev(Configuration):
       },
   }
 
-
-
+# Authentication and Authorization 
+# Point to Custom User Model
+AUTH_USER_MODEL= "blango_auth.User"
 
   # Quick-start development settings - unsuitable for production
   # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
@@ -114,6 +115,7 @@ class Dev(Configuration):
       'crispy_forms',
       'crispy_bootstrap5',
       'debug_toolbar',
+      'blango_auth.apps.BlangoAuthConfig',
   ]
 
   MIDDLEWARE = [
