@@ -8,7 +8,7 @@ from django_registration.backends.activation.views import RegistrationView
 import blog.views
 
 import blango_auth.views
-import blango_auth.forms import BlangoRegistrationForm
+from blango_auth.forms import BlangoRegistrationForm
 
 
 urlpatterns = [
