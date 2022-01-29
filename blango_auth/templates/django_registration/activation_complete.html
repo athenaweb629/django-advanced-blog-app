@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags blog_extras %}
+{% block title %}Activation Complete{% endblock %}
+{% block content %}
+{% row "justify-content-center" %}
+    {% col "col-md-6" %}
+        <h2>Activation Complete</h2>
+        <p>Your account is now activated! You can now log in and use Blango.</p>
+        <p><a href="{% url "login" %}">Log In</a></p>
+    {% endcol %}
+{% endrow %}
+{% endblock %}
