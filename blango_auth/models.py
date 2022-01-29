@@ -1,9 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser, UserManager
 
-class User(AbstractUser):
-    pass
-
 
 class BlangoUserManager(UserManager):
     def _create_user(self, email, password, **extra_fields):
@@ -30,3 +27,26 @@ class BlangoUserManager(UserManager):
             raise ValueError("Superuser must have is_superuser=True.")
 
         return self._create_user(email, password, **extra_fields)
+
+from django.utils.translation import gettext_lazy as _
+
+class User(AbstractUser):
+    # Implementing Email Log in
+    # Remove Username instances and replace with email
+    username = None
+    # Require unique email addresses
+    email = models.EmailField(
+        _("email address"), 
+        unique=True,
+    )
+    # set to a new instance of the user manager
+    objects = BlangoUserManager()
+    # Since username is required, replace with email.
+    USERNAME_FIELD = "email"
+    # Remove Username instances and replace with email
+    # Django will assume REQUIRED_FIELDS=username
+    REQUIRED_FIELDS = []
+
+
+    def __str__(self):
+        return self.email
