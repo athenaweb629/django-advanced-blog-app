@@ -78,6 +78,13 @@ class Dev(Configuration):
   # Authentication and Authorization 
   # Point to Custom User Model
   AUTH_USER_MODEL= "blango_auth.User"
+  
+  # Django Registration Email
+  # console email backend prints to terminal
+  EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+
+  # Activation Key valid for 77 days
+  ACCOUNT_ACTIVATION_DAYS = 7
 
   # Quick-start development settings - unsuitable for production
   # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
