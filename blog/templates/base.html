@@ -14,9 +14,10 @@
             {% if request.user.is_active %}
                 <a class="nav-link" href="{% url "profile" %}">Profile</a>
                 <a class="nav-link" href="{% url "logout" %}">Log Out</a>
-            {% else %}
+              {% else %}
+                <a class="nav-link" href="{% url "django_registration_register" %}">Register</a>
                 <a class="nav-link" href="{% url "login" %}">Log In</a>
-            {% endif %}
+              {% endif %}
         </div>
     </div>
   </nav>
