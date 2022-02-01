@@ -2,6 +2,11 @@
 {% load crispy_forms_tags blog_extras %}
 {% block title %}Log In to Blango{% endblock %}
 {% block content %}
+{% row %}
+    {% col "col-sm-12 text-center" %}
+    <h2>Log In</h2>
+    {% endcol %}
+{% endrow %}
 {% row "justify-content-center" %}
     {% col "col-md-6" %}
     {% if next %}
