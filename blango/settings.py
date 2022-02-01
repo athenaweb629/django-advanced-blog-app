@@ -117,12 +117,18 @@ class Dev(Configuration):
       'django.contrib.contenttypes',
       'django.contrib.sessions',
       'django.contrib.messages',
+      # Sites must come after messages 
+      'django.contrib.sites',
       'django.contrib.staticfiles',
       'blog.apps.BlogConfig',
       'crispy_forms',
       'crispy_bootstrap5',
       'debug_toolbar',
       'blango_auth.apps.BlangoAuthConfig',
+      'allauth',
+      'allauth.account',
+      'allauth.socialaccount',
+      'allauth.socialaccount.providers.google',
   ]
 
   MIDDLEWARE = [
@@ -228,6 +234,20 @@ class Dev(Configuration):
   # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
   DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+  
+  # Configuration for AllAuth / Google Integration 
+ 
+  # SITE_ID tells the app which "Site" object to use these 
+  # settings for.
+  SITE_ID = 1
+
+  # Django Allauth creates a User object from a social account login
+  # Since the Custom User model removed usernames, the
+  # settings below will help ensure allauth doesn't fail 
+  ACCOUNT_USER_MODEL_USERNAME_FIELD = None
+  ACCOUNT_EMAIL_REQUIRED = True
+  ACCOUNT_USERNAME_REQUIRED = False
+  ACCOUNT_AUTHENTICATION_METHOD = "email"
 
 # Production 
 class Prod(Dev):
