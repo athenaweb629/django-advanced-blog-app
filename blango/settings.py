@@ -112,6 +112,7 @@ class Dev(Configuration):
   # Application definition
 
   INSTALLED_APPS = [
+      'rest_framework',
       'django.contrib.admin',
       'django.contrib.auth',
       'django.contrib.contenttypes',
@@ -129,7 +130,6 @@ class Dev(Configuration):
       'allauth.account',
       'allauth.socialaccount',
       'allauth.socialaccount.providers.google',
-      'rest_framework',
   ]
 
   MIDDLEWARE = [
