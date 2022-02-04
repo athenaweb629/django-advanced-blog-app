@@ -24,7 +24,7 @@ urlpatterns = [
     ),
     path("accounts/profile/", blango_auth.views.profile, name="profile"),
     path("accounts/", include("django_registration.backends.activation.urls")),
-    path("api/v1/", include("blog.api_urls")),
+    path("api/v1/", include("blog.api.urls")),
 ]
 
 # Map the path __debug__/ to the DJDT's URL's, but only in debug mode.
