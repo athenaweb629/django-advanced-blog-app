@@ -3,6 +3,7 @@ from http import HTTPStatus
 from django.urls import reverse
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+from rest_framework.views import APIView
 
 from blog.api.serializers import PostSerializer
 from blog.models import Post
