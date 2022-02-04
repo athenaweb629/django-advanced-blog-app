@@ -9,7 +9,7 @@ from blog.models import Post
 
 
 @api_view(["GET", "POST"])
-def post_list(request):
+def post_list(request, format=None):
     if request.method == "GET":
         posts = Post.objects.all()
         return Response({"data": PostSerializer(posts, many=True).data})
@@ -25,7 +25,7 @@ def post_list(request):
 
 
 @api_view(["GET", "PUT", "DELETE"])
-def post_detail(request, pk):
+def post_detail(request, pk, format=None):
     try:
         post = Post.objects.get(pk=pk)
     except Post.DoesNotExist:
