@@ -25,20 +25,24 @@ def post_list(request, format=None):
 
 
 @api_view(["GET", "PUT", "DELETE"])
-def post_detail(request, pk, format=None):
-    try:
-        post = Post.objects.get(pk=pk)
-    except Post.DoesNotExist:
-        return Response(status=HTTPStatus.NOT_FOUND)
+class PostDetail(APIView):
+    @staticmethod
+    def get_post(pk):
+        return get_object_or_404(Post, pk=pk)
 
-    if request.method == "GET":
+    def get(self, request, pk, format=None):
+        post = self.get_post(pk)
         return Response(PostSerializer(post).data)
-    elif request.method == "PUT":
+
+    def put(self, request, pk, format=None):
+        post = self.get_post(pk)
         serializer = PostSerializer(post, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(status=HTTPStatus.NO_CONTENT)
         return Response(serializer.errors, status=HTTPStatus.BAD_REQUEST)
-    elif request.method == "DELETE":
+
+    def delete(self, request, pk, format=None):
+        post = self.get_post(pk)
         post.delete()
         return Response(status=HTTPStatus.NO_CONTENT)
