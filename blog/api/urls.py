@@ -8,8 +8,8 @@ urlpatterns = [
     path("posts/<int:pk>", PostDetail.as_view(), name="api_post_detail"),
 ]
 
-urlpatterns = format_suffix_patterns(urlpatte
-# DRF login url
+urlpatterns = format_suffix_patterns(urlpatterns)
+# DRF Login URL
 urlpatterns += [
     path("auth/", include("rest_framework.urls")),
 ]

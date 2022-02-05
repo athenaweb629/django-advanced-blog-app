@@ -3,7 +3,7 @@
 {% block content %}
     <h2>Blog Posts</h2>
     {% for post in posts %}
-    {% row "border-bottom" %}
+    {% row "border-bottom m-1 p-1" %}
         {% col %}
         <h3>{{ post.title }}</h3>
             {% include "blog/post-byline.html" %} 
