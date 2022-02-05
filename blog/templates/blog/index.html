@@ -10,7 +10,7 @@
             <p>{{ post.summary }}</p>
             <p>
                 ({{ post.content|wordcount }} words)
-                <a href="{% url "blog-post-detail" post.slug %}">Read More</a
+                <a href="{% url "blog-post-detail" post.slug %}" class="txt-bc">Read More</a
             </p> 
         {% endcol %}
     {% endrow %}

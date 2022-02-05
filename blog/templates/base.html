@@ -14,31 +14,46 @@
        nav {
          background-color: #212529 !important;
        }
-       nav a{
-         color: white !important;
+       .txt-w {
+         color: #fff;
        }
-       a{
-         color: #46cfb9 !important;
-         text-decoration: none !important;
+       .txt-w:hover {
+         color: #C2C2C2;
+        }
+       .txt-bc {
+         color: #1f9d8b;
+         text-decoration: none;
+       }
+       .txt-bc:hover {
+         color: #2bc7b1;
+       }
+
+       .txt-cb {
+         color: #8143fb;
+         text-decoration: none;
+       }
+       .txt-cb:hover {
+         color: #9c6aff;
+       }
+
+       .text-indigo {
+         color: #5049c4;
+       }
   </style>
   </head>
-  <style>
-    .txt-offwhite {
-      color: #dbe9e9;
-    }
-  </style>
   <body>
-    <nav class="navbar navbar-expand-lg navbar-dark">
+    <nav class="navbar navbar-expand-lg navbar-dark txt-w">
     <div class="container-fluid">
         <a class="navbar-brand" href="/">Blango</a>
         <div class="d-flex">
             {% if request.user.is_active %}
-                <a class="nav-link txt-offwhite" href="{% url "profile" %}">Profile</a>
-                <a class="nav-link txt-offwhite" href="{% url "logout" %}">Log Out</a>
+                <a class="nav-link txt-w" href="{% url "profile" %}">Profile</a>
+                <a class="nav-link txt-w" href="{% url "logout" %}">Log Out</a>
               {% else %}
-                <a class="nav-link txt-offwhite" href="{% url "django_registration_register" %}">Register</a>
-                <a class="nav-link txt-offwhite" href="{% url "login" %}">Log In</a>
+                <a class="nav-link txt-w" href="{% url "django_registration_register" %}">Register</a>
+                <a class="nav-link txt-w" href="{% url "login" %}">Log In</a>
               {% endif %}
+                <a class="nav-link txt-w" href="{% url "api_post_list" %}">API</a>
         </div>
     </div>
   </nav>
