@@ -66,3 +66,8 @@ def recent_posts(post):
     # Log call for 'recent posts' - template fragment caching
     logger.debug("Loaded %d recent posts for post %d", len(posts), post.pk)
     return {"title": "Recent Posts", "posts": posts}
+
+
+@register.simple_tag
+def h2(page_name=""):
+    return format_html('<div class="card-body text-center mt-4 p-5"><h2 class="card-title display-2">{}</h2></div>', page_name)

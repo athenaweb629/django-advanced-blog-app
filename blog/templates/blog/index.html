@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load blog_extras %}
 {% block content %}
-    <h2>Blog Posts</h2>
+    {% h2 "Blog Posts" %}
     {% for post in posts %}
     {% row "border-bottom m-1 p-1" %}
         {% col %}

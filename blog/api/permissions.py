@@ -8,9 +8,9 @@ class AuthorModifyOrReadOnly(permissions.IsAuthenticatedOrReadOnly):
     return request.user == obj.author
   
   
-# IsAdminUser always returns True from has_object_permission(),
+# IsAdminUser always returns True from has_object_permission(), even if a user isn’t logged in
 # Solution is subclassing IsAdminUser and implementing has_object_permission()
-even if a user isn’t logged in
+
 class IsAdminUserForObject(permissions.IsAdminUser):
   def has_object_permission(self, request, view, obj):
     return bool(request.user and request.user.is_staff)
