@@ -2,12 +2,12 @@ from rest_framework import serializers
 from blog.models import Post
 
 class PostSerializer(serializers.ModelSerializer):
-    # To make tags 'readonly' - simplest way of serializing relationships
-    tags = serializers.PrimaryKeyRelatedField(read_only=True, many=True)
-    # Alternatively StringRelatedfield will call the __str__() method of the object:
-    tags = serializers.StringRelatedfield(many=True)
-    # Another altnerative: SlugRelatedField - intended to work with a SlugField of a related object although it can work with any unique field. 
-    tags = serializers.SlugRelatedField(slug_field="value", many=True, queryset=Tag.objects.all())
+    # serializes a related object to a URL at which we can retrieve the full detail of the object
+    # Requires name of view 
+    tags = serializers.HyperlinkedRelatedField(
+        queryset=User.objects.all(),
+        view_name="api_user_detail"
+        )
     class Meta:
         model = Post
         fields = "__all__"
