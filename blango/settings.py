@@ -263,7 +263,7 @@ class Dev(Configuration):
     ],
 }
 
-# https://swagger.io/
+# Browsable API - Swagger OpenAPI Specification
 # https://swagger.io/specification/
 # https://github.com/axnsan12/drf-yasg
 SWAGGER_SETTINGS = {
