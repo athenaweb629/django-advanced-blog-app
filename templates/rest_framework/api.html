@@ -1,0 +1,27 @@
+{# https://www.django-rest-framework.org/topics/browsable-api/#customizing #}
+{% extends "rest_framework/base.html" %}
+
+{# Title of Page #}
+{# Same Logic the main api.html uses to to show page name and api name #}
+
+{% block title %}{% if name %}{{ name }} – {% endif %} Blango REST API{% endblock %}
+
+{# Upper Left Corner Nav Branding Name  #}
+
+{% block branding %}
+    <a href="/" class="navbar-brand">
+        Blango REST API
+    </a>
+{% endblock %}
+
+{# Top Border of Page Color Change #}
+{# block.super as to retain the original style rules #}
+
+{% block style %}
+    {{ block.super }}
+    <style>
+        div .navbar {
+            border-top-color: #2bc7b1;
+        }
+    </style>
+{% endblock %}
