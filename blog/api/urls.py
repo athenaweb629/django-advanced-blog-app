@@ -9,14 +9,14 @@ from rest_framework.routers import DefaultRouter
 from drf_yasg import openapi 
 from drf_yasg.views import get_schema_view
 
-from blog.api.views import PostList, PostDetail, UserDetail, TagViewSet 
+from blog.api.views import PostViewSet, UserDetail, TagViewSet 
 
 
 
 # Instantiate Router for ViewSets
 router = DefaultRouter()
 router.register("tags", TagViewSet)
-
+router.register("posts", PostViewSet)
 
 schema_view = get_schema_view(
     openapi.Info(
@@ -30,7 +30,7 @@ schema_view = get_schema_view(
 
 urlpatterns = [
     path("users/<str:email>", UserDetail.as_view(), name="api_user_detail"),
-    # Remove specific post / postdetail views
+    # Remove specific postlist / postdetail views and replace with router.urls
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)
