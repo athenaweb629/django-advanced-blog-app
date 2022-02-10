@@ -17,6 +17,19 @@ from blog.api.views import PostList, PostDetail, UserDetail
 router = DefaultRouter()
 router.register("tags", TagViewSet)
 
+# Set up mappings from HTTP methods to viewset methods - to make in
+# possible to 'extract' views from the viewset
+tag_list = TagViewSet.as_view({
+    "get": "list",
+    "post": "create"
+})
+
+tag_detail = TagViewSet.as_view({
+    "get": "retrieve",
+    "put": "update",
+    "patch": "partial_update",
+    "delete": "destroy"
+})
 
 schema_view = get_schema_view(
     openapi.Info(
@@ -33,6 +46,9 @@ urlpatterns = [
     # Include automatic router views
     # Remove specific post / postdetail views
     path("", include(router.urls)),
+    # add pseudoviews to url map
+    path("tags/", tag_list, name="tag_list"),
+    path("tags/<int:pk>/", tag_detail, name="tag_detail"),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)

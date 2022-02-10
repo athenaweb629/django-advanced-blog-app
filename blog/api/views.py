@@ -14,6 +14,16 @@ from blog.api.permissions import AuthorModifyOrReadOnly, IsAdminUserForObject
 from blog.models import Post
 from blango_auth.models import User
 
+# Example Viewset that allows listing all Tag objects ~ assuming TagSerializer has been implemented
+class TagViewSet(viewsets.ViewSet):
+    def list(self, request):
+        queryset = Tag.objects.all()
+        serializer = TagSerializer(queryset, many=True)
+        return Response(serializer.data)
+# Model Version is more efficient in this case
+class TagViewSet(viewsets.ModelViewSet):
+    queryset = Tag.objects.all()
+    serializer_class = TagSerializer
 class PostList(generics.ListCreateAPIView):
     authentication_classes = [SessionAuthentication]
     queryset = Post.objects.all()
