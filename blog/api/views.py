@@ -24,16 +24,23 @@ class TagViewSet(viewsets.ModelViewSet):
     serializer_class = TagSerializer
 
 
-class PostList(generics.ListCreateAPIView):
-    authentication_classes = [SessionAuthentication]
-    queryset = Post.objects.all()
-    serializer_class = PostSerializer
+    # https://www.django-rest-framework.org/api-guide/viewsets/
+    @action(methods=["get"], detail=True, name="Posts with the Tag")
+    def posts(self, request, pk=None):
+        tag = self.get_object()
+        post_serializer = PostSerializer(
+            tag.posts, many=True, context={"request": request}
+        )
+        return Response(post_serializer.data)
 
-
-class PostDetail(generics.RetrieveUpdateDestroyAPIView):
+class PostViewSet(viewsets.ModelViewSet):
     permission_classes = [AuthorModifyOrReadOnly | IsAdminUserForObject]
     queryset = Post.objects.all()
-    serializer_class = PostDetailSerializer
+
+    def get_serializer_class(self):
+        if self.action in ("list", "create"):
+            return PostSerializer
+        return PostDetailSerializer
 
 class UserDetail(generics.RetrieveAPIView):
     lookup_field = "email"
