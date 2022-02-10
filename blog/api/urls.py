@@ -3,11 +3,20 @@ from django.urls import path, include, re_path
 
 from rest_framework.urlpatterns import format_suffix_patterns
 from rest_framework.authtoken import views
+from rest_framework.routers import DefaultRouter
+
 
 from drf_yasg import openapi 
 from drf_yasg.views import get_schema_view
 
 from blog.api.views import PostList, PostDetail, UserDetail
+
+
+
+# Instantiate Router for ViewSets
+router = DefaultRouter()
+router.register("tags", TagViewSet)
+
 
 schema_view = get_schema_view(
     openapi.Info(
@@ -20,9 +29,10 @@ schema_view = get_schema_view(
 )
 
 urlpatterns = [
-    path("posts/", PostList.as_view(), name="api_post_list"),
-    path("posts/<int:pk>", PostDetail.as_view(), name="api_post_detail"),
     path("users/<str:email>", UserDetail.as_view(), name="api_user_detail"),
+    # Include automatic router views
+    # Remove specific post / postdetail views
+    path("", include(router.urls)),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)
