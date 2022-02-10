@@ -9,7 +9,7 @@ from rest_framework.routers import DefaultRouter
 from drf_yasg import openapi 
 from drf_yasg.views import get_schema_view
 
-from blog.api.views import PostList, PostDetail, UserDetail
+from blog.api.views import PostList, PostDetail, UserDetail, TagViewSet 
 
 
 
@@ -17,19 +17,6 @@ from blog.api.views import PostList, PostDetail, UserDetail
 router = DefaultRouter()
 router.register("tags", TagViewSet)
 
-# Set up mappings from HTTP methods to viewset methods - to make in
-# possible to 'extract' views from the viewset
-tag_list = TagViewSet.as_view({
-    "get": "list",
-    "post": "create"
-})
-
-tag_detail = TagViewSet.as_view({
-    "get": "retrieve",
-    "put": "update",
-    "patch": "partial_update",
-    "delete": "destroy"
-})
 
 schema_view = get_schema_view(
     openapi.Info(
@@ -43,12 +30,7 @@ schema_view = get_schema_view(
 
 urlpatterns = [
     path("users/<str:email>", UserDetail.as_view(), name="api_user_detail"),
-    # Include automatic router views
     # Remove specific post / postdetail views
-    path("", include(router.urls)),
-    # add pseudoviews to url map
-    path("tags/", tag_list, name="tag_list"),
-    path("tags/<int:pk>/", tag_detail, name="tag_detail"),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)
@@ -66,4 +48,6 @@ urlpatterns += [
         schema_view.with_ui("swagger", cache_timeout=0),
         name="schema-swagger-ui",
     ),
+    # Include automatic router views
+    path("", include(router.urls)),
 ]

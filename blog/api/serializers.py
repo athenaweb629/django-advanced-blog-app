@@ -1,6 +1,5 @@
 from rest_framework import serializers
 
-
 from blog.models import Post, Tag, Comment
 from blango_auth.models import User
 
@@ -17,6 +16,12 @@ class TagField(serializers.SlugRelatedField):
             return self.get_queryset().get_or_create(value=data.lower())[0]
         except (TypeError, ValueError):
             self.fail(f"Tag value {data} is invalid")
+
+# New Tag Serializers for API endpoints ~ using viewsets and routers
+class TagSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Tag
+        fields = "__all__"
 
 
 class CommentSerializer(serializers.ModelSerializer):
