@@ -37,6 +37,16 @@ class TagViewSet(viewsets.ModelViewSet):
             tag.posts, many=True, context={"request": request}
         )
         return Response(post_serializer.data)
+    
+    @method_decorator(cache_page(300))
+    def list(self, *args, **kwargs):
+        return super(TagViewSet, self).list(*args, **kwargs)
+
+    @method_decorator(cache_page(300))
+    def retrieve(self, request, *args, **kwargs):
+        return super(TagViewSet, self).retrieve(*args, **kwargs)
+
+
 
 class PostViewSet(viewsets.ModelViewSet):
     permission_classes = [AuthorModifyOrReadOnly | IsAdminUserForObject]
@@ -62,7 +72,25 @@ class PostViewSet(viewsets.ModelViewSet):
         serializer = PostSerializer(posts, many=True, context={"request": request})
         return Response(serializer.data)
 
+
+    # Caching Rules for Blango Viewsets
+    # The list of Posts should be cached for 2 mins, however when fetching a Post detail we should get the latest data from the database.
+    # Since Tag objects to change very often; cache both the list and detail views for 5 mins.
+    @method_decorator(cache_page(120))
+    def list(self, *args, **kwargs):
+        return super(PostViewSet, self).list(*args, **kwargs)
+
+
 class UserDetail(generics.RetrieveAPIView):
     lookup_field = "email"
     queryset = User.objects.all()
     serializer_class = UserSerializer
+    # Adding caching to viewsets is similar, except the decorator(s) 
+    # need to be added to the built-in action methods. 
+    # Adding caching to the methods that alter data is basically redundant, they do not do anything.
+    # With that said, only the list() and retrieve() methods 
+    # need caching implemented to add caching to this view.
+    # Can be added as pass through methods that call the super call
+    @method_decorator(cache_page(300))
+    def get(self, *args, **kwargs):
+        return super(UserDetail, self).get(*args, *kwargs)
