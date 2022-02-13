@@ -49,10 +49,12 @@ class PostViewSet(viewsets.ModelViewSet):
 
     
     # Will list only Post objects for which the current user is the author.
+    # Caches the response from this view, for 5 min.
     @method_decorator(cache_page(300))
-    @method_decorator(vary_on_headers("Authorization"))
-    @method_decorator(vary_on_cookie)
+    # vary_on_headers accepts multiple header names as arguments so removed vary_on_cookie to simplify code.
+    @method_decorator(vary_on_headers("Authorization", "Cookie"))
     @action(methods=["get"], detail=False, name="Posts by the logged in user")
+    # /api/v1/posts/mine
     def mine(self, request):
         if request.user.is_anonymous:
             raise PermissionDenied("You must be logged in to see which Posts are yours")
