@@ -1,3 +1,8 @@
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import cache_page
+from django.views.decorators.vary import vary_on_headers, vary_on_cookie
+
+from rest_framework.exceptions import PermissionDenied
 from rest_framework import generics
 from rest_framework import permissions
 from rest_framework.authentication import SessionAuthentication
@@ -41,6 +46,19 @@ class PostViewSet(viewsets.ModelViewSet):
         if self.action in ("list", "create"):
             return PostSerializer
         return PostDetailSerializer
+
+    
+    # Will list only Post objects for which the current user is the author.
+    @method_decorator(cache_page(300))
+    @method_decorator(vary_on_headers("Authorization"))
+    @method_decorator(vary_on_cookie)
+    @action(methods=["get"], detail=False, name="Posts by the logged in user")
+    def mine(self, request):
+        if request.user.is_anonymous:
+            raise PermissionDenied("You must be logged in to see which Posts are yours")
+        posts = self.get_queryset().filter(author=request.user)
+        serializer = PostSerializer(posts, many=True, context={"request": request})
+        return Response(serializer.data)
 
 class UserDetail(generics.RetrieveAPIView):
     lookup_field = "email"
