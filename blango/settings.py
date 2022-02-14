@@ -262,13 +262,17 @@ class Dev(Configuration):
       "rest_framework.permissions.IsAuthenticatedOrReadOnly"
     ],
     "DEFAULT_THROTTLE_CLASSES": [
-      "rest_framework.throttling.AnonRateThrottle",
-        "rest_framework.throttling.UserRateThrottle"
+      "blog.api.throttling.AnonSustainedThrottle",
+      "blog.api.throttling.AnonBurstThrottle",
+      "blog.api.throttling.UserSustainedThrottle",
+      "blog.api.throttling.UserBurstThrottle",
     ],
     "DEFAULT_THROTTLE_RATES": {
-        "anon": "500/day",
-        "user": "2000/day"
-    }
+        "anon_sustained": "500/day",
+        "anon_burst": "10/minute",
+        "user_sustained": "5000/day",
+        "user_burst": "100/minute",
+    },
 }
 # Throttling 
 # Valid Keys for DEFAULT_THROTTLE_RATES are the 'scopes' of the throttle classes, 
@@ -276,6 +280,12 @@ class Dev(Configuration):
 # Note - Scopes are arbitrary and can be customized
 # https://www.django-rest-framework.org/api-guide/throttling/
 
+# Burst and Sustrained Rates 
+# sustained 
+
+
+# DRF
+# Note - DRF anonymous users are determined by IP address, so multiple clients at the same IP address would be considered the same "user".
 
 # Browsable API - Swagger OpenAPI Specification
 # https://swagger.io/specification/
