@@ -3,6 +3,9 @@
 
 # Burst and Scope (Also See settings.py)
 
+# Custom Throttling Rules 
+# https://www.django-rest-framework.org/api-guide/throttling/#custom-throttles
+
 from rest_framework.throttling import AnonRateThrottle, UserRateThrottle
 import random
 
@@ -20,10 +23,3 @@ class UserSustainedThrottle(UserRateThrottle):
 
 class UserBurstThrottle(UserRateThrottle):
     scope = "user_burst"
-
-# Custom Throttling Rules 
-# https://www.django-rest-framework.org/api-guide/throttling/#custom-throttles
-# Example which will randomly deny one in every ten requests
-class RandomRateThrottle(throttling.BaseThrottle):
-    def allow_request(self, request, view):
-        return random.randint(1, 10) != 1
