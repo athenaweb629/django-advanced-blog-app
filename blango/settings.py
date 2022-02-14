@@ -261,7 +261,21 @@ class Dev(Configuration):
     "DEFAULT_PERMISSION_CLASSES": [
       "rest_framework.permissions.IsAuthenticatedOrReadOnly"
     ],
+    "DEFAULT_THROTTLE_CLASSES": [
+      "rest_framework.throttling.AnonRateThrottle",
+        "rest_framework.throttling.UserRateThrottle"
+    ],
+    "DEFAULT_THROTTLE_RATES": {
+        "anon": "500/day",
+        "user": "2000/day"
+    }
 }
+# Throttling 
+# Valid Keys for DEFAULT_THROTTLE_RATES are the 'scopes' of the throttle classes, 
+# defined by the 'scope' attr on the class. (IE AnonRateThrottle, etc)
+# Note - Scopes are arbitrary and can be customized
+# https://www.django-rest-framework.org/api-guide/throttling/
+
 
 # Browsable API - Swagger OpenAPI Specification
 # https://swagger.io/specification/
@@ -272,6 +286,7 @@ SWAGGER_SETTINGS = {
         "Basic": {"type": "basic"},
     }
 }
+
 
 # Production 
 class Prod(Dev):
