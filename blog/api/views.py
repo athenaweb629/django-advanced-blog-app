@@ -1,6 +1,8 @@
 from django.utils.decorators import method_decorator
+from django.utils import timezone
 from django.views.decorators.cache import cache_page
 from django.views.decorators.vary import vary_on_headers, vary_on_cookie
+from django.db.models import Q
 
 from rest_framework.exceptions import PermissionDenied
 from rest_framework import generics
@@ -23,7 +25,7 @@ from blog.api.serializers import (
     TagSerializer,
 )
 
-# Model Version is more efficient in this case
+# Model Version is more efficient in our case (compared to ViewSet)
 class TagViewSet(viewsets.ModelViewSet):
     queryset = Tag.objects.all()
     serializer_class = TagSerializer
@@ -52,6 +54,23 @@ class PostViewSet(viewsets.ModelViewSet):
     permission_classes = [AuthorModifyOrReadOnly | IsAdminUserForObject]
     queryset = Post.objects.all()
 
+
+    # User-based Filtering - Restricting Access to unpublished posts
+    # Side Note: Changes to get_queryset method apply to all API action methods
+    def get_queryset(self):
+      if self.request.user.is_anonymous:
+        # [published only] - anonymous users get published Posts only
+        return self.queryset.filter(published_at__lte=timezone.now())
+
+      if not self.request.user.is_staff:
+            # [allow all] - admin/staff users get all Posts
+            return self.queryset
+
+      # [own or published] - logged-in users get published Posts or those that they’ve authored
+      return self.queryset.filter(
+            Q(published_at__lte=timezone.now()) | Q(author=self.request.user)
+            )
+
     def get_serializer_class(self):
         if self.action in ("list", "create"):
             return PostSerializer
@@ -77,8 +96,11 @@ class PostViewSet(viewsets.ModelViewSet):
     # The list of Posts should be cached for 2 mins, however when fetching a Post detail we should get the latest data from the database.
     # Since Tag objects to change very often; cache both the list and detail views for 5 mins.
     @method_decorator(cache_page(120))
+    @method_decorator(vary_on_headers("Authorization", "Cookie"))
     def list(self, *args, **kwargs):
         return super(PostViewSet, self).list(*args, **kwargs)
+
+
 
 
 class UserDetail(generics.RetrieveAPIView):
