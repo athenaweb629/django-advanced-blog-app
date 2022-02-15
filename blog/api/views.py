@@ -69,7 +69,27 @@ class PostViewSet(viewsets.ModelViewSet):
       # [own or published] - logged-in users get published Posts or those that they’ve authored
       return self.queryset.filter(
             Q(published_at__lte=timezone.now()) | Q(author=self.request.user)
-            )
+      )
+      # URL-Based Filtering - Filtering posts based on time periods
+      # fetch the period_name URL parameter from self.kwargs
+      time_period_name = self.kwargs.get("period_name")
+
+      if not time_period_name:
+          # no further filtering required
+          return queryset
+      if time_period_name == "new":
+          return queryset.filter(published_at__gte=timezone.now() - timedelta(hours=1))
+      elif time_period_name == "today":
+          return queryset.filter(published_at__date=timezone.now().date(),)
+
+      elif time_period_name == "week":
+          return queryset.filter(published_at__gte=timezone.now() - timedelta(days=7))
+          
+      else:
+          raise Http404(
+              f"Time period {time_period_name} is not valid, should be "
+              f"'new', 'today' or 'week'"
+          )
 
     def get_serializer_class(self):
         if self.action in ("list", "create"):
