@@ -17,6 +17,10 @@ class Comment(models.Model):
 
 class Tag(models.Model):
     value = models.TextField(max_length=100, unique=True)
+    # Add ording to Tags model for Pagination so the ordering
+    # doesnt change between pages
+    class Meta:
+        ordering = ["value"]
 
     def __str__(self):
         return self.value

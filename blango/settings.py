@@ -273,6 +273,10 @@ class Dev(Configuration):
         "user_sustained": "5000/day",
         "user_burst": "100/minute",
     },
+    # Pagination can be applied globally (here, in settings.py) or it can be applied to a specific view/viewset
+    "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination", 
+    # Max per page
+    "PAGE_SIZE": 100,
 }
 # Throttling 
 # Valid Keys for DEFAULT_THROTTLE_RATES are the 'scopes' of the throttle classes, 
@@ -280,12 +284,14 @@ class Dev(Configuration):
 # Note - Scopes are arbitrary and can be customized
 # https://www.django-rest-framework.org/api-guide/throttling/
 
-# Burst and Sustrained Rates 
-# sustained 
-
-
 # DRF
 # Note - DRF anonymous users are determined by IP address, so multiple clients at the same IP address would be considered the same "user".
+
+# Django Rest Framework Third-Party Libraries
+# https://django-filter.readthedocs.io/
+# https://django-rest-framework-simplejwt.readthedocs.io/en/latest/
+# https://django-versatileimagefield.readthedocs.io/en/latest/
+
 
 # Browsable API - Swagger OpenAPI Specification
 # https://swagger.io/specification/
