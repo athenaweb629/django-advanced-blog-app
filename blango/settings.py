@@ -274,6 +274,7 @@ class Dev(Configuration):
         "user_burst": "100/minute",
     },
     # Pagination can be applied globally (here, in settings.py) or it can be applied to a specific view/viewset
+    # https://www.django-rest-framework.org/api-guide/pagination/#limitoffsetpagination
     "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination", 
     # Max per page
     "PAGE_SIZE": 100,

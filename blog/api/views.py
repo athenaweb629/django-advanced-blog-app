@@ -34,7 +34,15 @@ class TagViewSet(viewsets.ModelViewSet):
     # https://www.django-rest-framework.org/api-guide/viewsets/
     @action(methods=["get"], detail=True, name="Posts with the Tag")
     def posts(self, request, pk=None):
+        # Updated for pagination
+        # https://www.django-rest-framework.org/api-guide/pagination/#pagenumberpagination
         tag = self.get_object()
+        page = self.paginate_queryset(tag.posts)
+        if page is not None:
+            post_serializer = PostSerializer(
+                page, many=True, context={"request": request}
+            )
+            return self.get_paginated_response(post_serializer.data)
         post_serializer = PostSerializer(
             tag.posts, many=True, context={"request": request}
         )
@@ -104,13 +112,24 @@ class PostViewSet(viewsets.ModelViewSet):
     @method_decorator(vary_on_headers("Authorization", "Cookie"))
     @action(methods=["get"], detail=False, name="Posts by the logged in user")
     # /api/v1/posts/mine
+    # Since pagination was implemented, actions need to be fixed 
+    # The querysets will be returned in the prior, non-paginated format if theyre not manually paginated
+    # more info on pagination: 
+    # https://www.django-rest-framework.org/api-guide/pagination/#cursorpagination
+    # https://www.django-rest-framework.org/api-guide/pagination/#custom-pagination-styles
     def mine(self, request):
         if request.user.is_anonymous:
             raise PermissionDenied("You must be logged in to see which Posts are yours")
         posts = self.get_queryset().filter(author=request.user)
+
+        page = self.paginate_queryset(posts)
+
+        if page is not None:
+            serializer = PostSerializer(page, many=True, context={"request": request})
+            return self.get_paginated_response(serializer.data)
+
         serializer = PostSerializer(posts, many=True, context={"request": request})
         return Response(serializer.data)
-
 
     # Caching Rules for Blango Viewsets
     # The list of Posts should be cached for 2 mins, however when fetching a Post detail we should get the latest data from the database.
