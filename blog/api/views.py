@@ -56,9 +56,11 @@ class TagViewSet(viewsets.ModelViewSet):
     def retrieve(self, request, *args, **kwargs):
         return super(TagViewSet, self).retrieve(*args, **kwargs)
 
-
+# Example: Setting Django-Filter Backend by applying it to individual views/viewsets 
+import django_filters.rest_framework
 
 class PostViewSet(viewsets.ModelViewSet):
+    filter_backends = [django_filters.rest_framework.DjangoFilterBackend]
     permission_classes = [AuthorModifyOrReadOnly | IsAdminUserForObject]
     queryset = Post.objects.all()
 
