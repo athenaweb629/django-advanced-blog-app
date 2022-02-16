@@ -8,12 +8,12 @@ from rest_framework.exceptions import PermissionDenied
 from rest_framework import generics
 from rest_framework import permissions
 from rest_framework.authentication import SessionAuthentication
-
-
 from rest_framework import generics, viewsets
 from rest_framework.viewsets import ViewSet, ModelViewSet
 from rest_framework.response import Response 
 from rest_framework.decorators import action
+
+import django_filters.rest_framework
 
 from blog.api.permissions import AuthorModifyOrReadOnly, IsAdminUserForObject
 from blango_auth.models import User
@@ -56,11 +56,12 @@ class TagViewSet(viewsets.ModelViewSet):
     def retrieve(self, request, *args, **kwargs):
         return super(TagViewSet, self).retrieve(*args, **kwargs)
 
-# Example: Setting Django-Filter Backend by applying it to individual views/viewsets 
-import django_filters.rest_framework
 
 class PostViewSet(viewsets.ModelViewSet):
-    filter_backends = [django_filters.rest_framework.DjangoFilterBackend]
+    # to get simple equality-based filtering, define a list of fields  to be able to filter on.
+    # filters on url example: http://127.0.0.1:8000/api/v1/posts/?author=1&tags=1&tags=2
+    # The author and tags are both set by ID. Having the same parameter multiple times act as an or operator, so posts containing either tag 1 (django) or tag 2 (example) are found.
+    filterset_fields = ["author", "tags"]
     permission_classes = [AuthorModifyOrReadOnly | IsAdminUserForObject]
     queryset = Post.objects.all()
 
