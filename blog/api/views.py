@@ -15,6 +15,7 @@ from rest_framework.decorators import action
 
 import django_filters.rest_framework
 
+from blog.api.filters import PostFilterSet
 from blog.api.permissions import AuthorModifyOrReadOnly, IsAdminUserForObject
 from blango_auth.models import User
 from blog.models import Post, Tag
@@ -61,7 +62,9 @@ class PostViewSet(viewsets.ModelViewSet):
     # to get simple equality-based filtering, define a list of fields  to be able to filter on.
     # filters on url example: http://127.0.0.1:8000/api/v1/posts/?author=1&tags=1&tags=2
     # The author and tags are both set by ID. Having the same parameter multiple times act as an or operator, so posts containing either tag 1 (django) or tag 2 (example) are found.
-    filterset_fields = ["author", "tags"]
+    # filterset_fields = ["author", "tags"]
+    # filterset_field can be removed when updating to accommodate PostFilterSet ( see replacement, below )
+    filterset_class = [PostFilterSet]
     permission_classes = [AuthorModifyOrReadOnly | IsAdminUserForObject]
     queryset = Post.objects.all()
 
