@@ -163,5 +163,5 @@ class UserDetail(generics.RetrieveAPIView):
 
 
 # NOTE: Ordering - (see PostViewSet.ordering_fields)
-# By default, all readable serialized fields are available for ordering
+# By default, all readable serialized (readable AND serialized) fields are available for ordering
 # Fields ordered can be customized by adding the ordering_field attr. to a view/viewset
