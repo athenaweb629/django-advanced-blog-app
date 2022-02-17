@@ -282,8 +282,8 @@ class Dev(Configuration):
     # Django Filter 
     # https://django-filter.readthedocs.io/
     "DEFAULT_FILTER_BACKENDS": [
-            "django_filters.rest_framework.DjangoFilterBackend"
-        ],
+        "django_filters.rest_framework.DjangoFilterBackend"
+    ],
 }
 # Throttling 
 # Valid Keys for DEFAULT_THROTTLE_RATES are the 'scopes' of the throttle classes, 

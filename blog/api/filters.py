@@ -1,49 +1,39 @@
-from blog.models import Post
 from django_filters import rest_framework as filters
-
+from blog.models import Post
 
 class PostFilterSet(filters.FilterSet):
-  # Allow Clients to Search for Posts between certain django_filters
-  # Client can choose to set one or both Post date search fields
+    # Allow Clients to Search for Posts between certain django_filters
+    # Client can choose to set one or both Post date search fields
+    # Accepts date being searched from
+    published_from = filters.DateFilter(
+        field_name="published_at", lookup_expr="gte", label="Published Date From"
+    )
+    # Accepts date being searched to
+    published_to = filters.DateFilter(
+        field_name="published_at", lookup_expr="lte", label="Published Date To"
+    )
+    # Searches a User's Email (Case insensitive lookup - doesn't need EXACT email to search)
+    author_email = filters.CharFilter(
+        field_name="author__email",
+        lookup_expr="icontains",
+        label="Author Email Contains",
+    )
+    # Searches inside Post Summary (AKA the preview featured on the index page)
+    summary = filters.CharFilter(
+        field_name="summary",
+        lookup_expr="icontains",
+        label="Summary Contains",
+    )
+    # Searches inside Post Content (AKA the actual post, featured on detail page)
+    content = filters.CharFilter(
+        field_name="content",
+        lookup_expr="icontains",
+        label="Content Contains",
+    )
 
-  # Accepts date being searched from
-  published_from = filters.DateFilter(
-    field_name="published_at", 
-    lookup_expr="gte", 
-    label="Published Date From",
-  )
-  # Accepts date being searched to
-  published_to = filters.DateFilter(
-    field_name="published_at", 
-    lookup_expr="lte", 
-    label="Published Date To",
-  )
-  # Searches a User's Email (Case insensitive lookup - doesn't need EXACT email to search)
-  author_email = filters.DateFilter(
-    field_name="author__email", 
-    lookup_expr="icontains",
-    label="Author Email Contains",
-  )
-
-  # Searches inside Post Summary (AKA the preview featured on the index page)
-  summary = filters.DateFilter(
-    field_name="summary", 
-    lookup_expr="icontains",
-    label="Summary Contains",
-  )
-
-  # Searches inside Post Content (AKA the actual post, featured on detail page)
-  content = filters.DateFilter(
-    field_name="content", 
-    lookup_expr="icontains", 
-    label="Content Contains",
-  )
-
-  class Meta:
-    model = Post
-    fields = ["author", "tags"]
-
-
+    class Meta:
+        model = Post
+        fields = ["author", "tags"]
 
 
 # Django-Filter and the FilterSet Class
