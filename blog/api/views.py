@@ -60,6 +60,8 @@ class TagViewSet(viewsets.ModelViewSet):
 
 class PostViewSet(viewsets.ModelViewSet):
     filterset_class = PostFilterSet
+    # Post list made orderable just by published date, author, title and slug
+    ordering_fields = ["published_at", "author", "title", "slug"]
     permission_classes = [AuthorModifyOrReadOnly | IsAdminUserForObject]
     queryset = Post.objects.all()
 
@@ -156,3 +158,10 @@ class UserDetail(generics.RetrieveAPIView):
     @method_decorator(cache_page(300))
     def get(self, *args, **kwargs):
         return super(UserDetail, self).get(*args, *kwargs)
+
+
+
+
+# NOTE: Ordering - (see PostViewSet.ordering_fields)
+# By default, all readable serialized fields are available for ordering
+# Fields ordered can be customized by adding the ordering_field attr. to a view/viewset
