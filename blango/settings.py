@@ -258,6 +258,9 @@ class Dev(Configuration):
         "rest_framework.authentication.BasicAuthentication",
         "rest_framework.authentication.SessionAuthentication",
         "rest_framework.authentication.TokenAuthentication",
+        # https://django-rest-framework-simplejwt.readthedocs.io/en/latest/index.html
+        "rest_framework_simplejwt.authentication.JWTAuthenticati
+on",
     ],
     "DEFAULT_PERMISSION_CLASSES": [
       "rest_framework.permissions.IsAuthenticatedOrReadOnly"
