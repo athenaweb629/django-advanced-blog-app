@@ -49,7 +49,10 @@ class Post(models.Model):
         null=True, 
         blank=True
     )
+    # https://django-versatileimagefield.readthedocs.io/en/latest/model_integration.html#model-integration
+    
     ppoi = PPOIField(null=True, blank=True)
+    # https://django-versatileimagefield.readthedocs.io/en/latest/specifying_ppoi.html#the-ppoifield
 
     def __str__(self):
         return self.title
