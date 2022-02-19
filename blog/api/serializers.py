@@ -1,4 +1,5 @@
 from rest_framework import serializers
+from versatileimagefield.serializers import VersatileImageFieldSerializer
 
 from blog.models import Post, Tag, Comment
 from blango_auth.models import User
@@ -35,6 +36,15 @@ class CommentSerializer(serializers.ModelSerializer):
 
 # PostSerializer must come after UserSerializer and CommentSerializer
 class PostSerializer(serializers.ModelSerializer):
+    # Option to fetch thumbnail image 
+    # full_size option included because its already generated and basically 'free' to include
+    hero_image = VersatileImageFieldSerializer(
+        sizes=[
+            ("full_size", "url"),
+            ("thumbnail", "thumbnail__100x100"),
+        ],
+        read_only=True,
+    )
     # Tags as string objects - unqiue (They were ints previously)
     tags = serializers.SlugRelatedField(
         slug_field="value", 
@@ -52,11 +62,21 @@ class PostSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Post
-        fields = "__all__"
+        exclude = ["ppoi"]
         readonly = ["modified_at", "created_at"]
 
 # PostDetailSerializer Must come at the end, below User, Comment, and Post. TagSerializer's order does not matter.
 class PostDetailSerializer(PostSerializer):
+    # One extra size option for a cropped 200x200 image
+    # https://django-versatileimagefield.readthedocs.io/en/latest/overview.html
+    hero_image = VersatileImageFieldSerializer(
+        sizes=[
+            ("full_size", "url"),
+            ("thumbnail", "thumbnail__100x100"),
+            ("square_crop", "crop__200x200"),
+        ],
+        read_only=True,
+    )
     comments = CommentSerializer(many=True)
 
     def update(self, instance, validated_data):
