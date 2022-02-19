@@ -135,7 +135,20 @@ class Dev(Configuration):
       'allauth.socialaccount.providers.google',
       'drf_yasg',
       'django_filters',
+      'versatileimagefield',
   ]
+
+  # Versatile Image Field 
+  # https://django-versatileimagefield.readthedocs.io/en/latest/index.html
+
+  # Note - Additional Modules need to be installed for VersatileImageField:
+  
+  # [Windows]: python-magic-bin==0.4.1
+  
+  # [MacOS]: libmagic 
+
+  # HomeBrew (for MacOS)
+  # https://brew.sh/ 
 
   MIDDLEWARE = [
       # The order of MIDDLEWARE is important. You should include the Debug
@@ -235,6 +248,10 @@ class Dev(Configuration):
   # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
   STATIC_URL = '/static/'
+
+  # Media 
+  MEDIA_ROOT = BASE_DIR / "media"
+  MEDIA_URL = "/media/"
 
   # Default primary key field type
   # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
