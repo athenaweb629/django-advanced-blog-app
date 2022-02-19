@@ -258,13 +258,14 @@ class Dev(Configuration):
         "rest_framework.authentication.BasicAuthentication",
         "rest_framework.authentication.SessionAuthentication",
         "rest_framework.authentication.TokenAuthentication",
-        # https://django-rest-framework-simplejwt.readthedocs.io/en/latest/index.html
-        "rest_framework_simplejwt.authentication.JWTAuthenticati
-on",
+        # SimpleJWT
+        # https://django-rest-framework-simplejwt.readthedocs.io/en/latest/settings.html
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
     ],
     "DEFAULT_PERMISSION_CLASSES": [
       "rest_framework.permissions.IsAuthenticatedOrReadOnly"
     ],
+    # Throttling 
     "DEFAULT_THROTTLE_CLASSES": [
       "blog.api.throttling.AnonSustainedThrottle",
       "blog.api.throttling.AnonBurstThrottle",
@@ -302,6 +303,27 @@ on",
 # https://django-rest-framework-simplejwt.readthedocs.io/en/latest/
 # https://django-versatileimagefield.readthedocs.io/en/latest/
 
+# SimpleJWT
+# https://django-rest-framework-simplejwt.readthedocs.io/en/latest/index.html
+
+# Note - JWTs consist of three parts: header, payload and signature
+
+# 1. [Header]: consists of 'type' (usually jwt) and the algorithm ('alg') used to generate signature
+
+# 2. [Payload]: Can consist of any data (IE user_pk, token_type, exp)
+
+# 3. [Signature]: generated using a hash function as specified in the header.
+# Note - For a JWT, the input value to the HMAC256 is the base-64 encoded header, and the base-64 encoded payload, joined with a .. The secret that’s used is kept private.
+
+# To authenticate using JWT, the client sends the token in the 'Authorization' HTTP header, (usually with a 'Bearer' prefix)
+
+
+# JSON Web Tokens
+# https://jwt.io/introduction
+
+# JWT.IO
+# online tool to decode, verify and generate JWTs
+# https://jwt.io/
 
 # Browsable API - Swagger OpenAPI Specification
 # https://swagger.io/specification/
