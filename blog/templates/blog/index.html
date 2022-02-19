@@ -1,15 +1,25 @@
 {% extends "base.html" %}
 {% load blog_extras %}
 {% block content %}
+<!-- Page Header / Page Title  -->
     {% h2 "Blog Posts" %}
     {% for post in posts %}
     {% row "border-bottom m-1 p-1" %}
         {% col %}
+        <!-- Blogpost Title -->
         <h3>{{ post.title }}</h3>
+        <!-- Image Thumbnail (max dimension: 100 pixels) -->
+        {% if post.hero_image %}
+        <img src="{{ post.hero_image.thumbnail.100x100.url }}"/>
+        {% endif %}
+            <!-- Author Name and Date published -->
             {% include "blog/post-byline.html" %} 
+            <!-- Preview of main content (summary field) -->
             <p>{{ post.summary }}</p>
             <p>
+                <!-- Word Count - IE: '(500 Words)' -->
                 ({{ post.content|wordcount }} words)
+                <!-- Read More link to detail view of post -->
                 <a href="{% url "blog-post-detail" post.slug %}" class="txt-bc">Read More</a
             </p> 
         {% endcol %}
