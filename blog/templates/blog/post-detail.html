@@ -1,13 +1,23 @@
 {% extends "base.html" %}
 {% load blog_extras cache %}
 {% block content %} 
-<!-- Blog Title with preview ('content') of post -->
+<!-- Blog Title -->
 <h2>{{ post.title }}</h2> 
+<!-- Author and Date of Post -->
 {% row %}
     {% col %}
         {% include "blog/post-byline.html" %}
     {% endcol %}
 {% endrow %}
+<!-- Hero Image -->
+{% if post.hero_image %}
+    {% row %}
+        {% col %}
+            <img class="img-fluid" src="{{ post.hero_image.url }}">
+        {% endcol %}
+    {% endrow %}
+{% endif %}
+<!-- Post Content (main body of text) -->
 {% row %}
     {% col %}
         {{ post.content|safe }}
