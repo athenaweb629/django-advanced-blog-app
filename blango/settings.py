@@ -5,6 +5,8 @@ from configurations import values
 import dj_database_url
 import logging
 
+from datetime import timedelta
+
 """
 Django settings for blango project.
 
@@ -303,6 +305,14 @@ class Dev(Configuration):
 # https://django-rest-framework-simplejwt.readthedocs.io/en/latest/
 # https://django-versatileimagefield.readthedocs.io/en/latest/
 
+
+# JWT Refresh Token valid time - 7 days
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": timedelta(days=1),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=7),
+}
+
+
 # SimpleJWT
 # https://django-rest-framework-simplejwt.readthedocs.io/en/latest/index.html
 
@@ -324,6 +334,8 @@ class Dev(Configuration):
 # JWT.IO
 # online tool to decode, verify and generate JWTs
 # https://jwt.io/
+
+# https://www.epochconverter.com/
 
 # Browsable API - Swagger OpenAPI Specification
 # https://swagger.io/specification/
