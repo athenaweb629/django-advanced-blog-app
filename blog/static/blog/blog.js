@@ -5,7 +5,7 @@ alert(framework + ' is written in ' + language)
   /* Note - Lines in javascript can be terminated with a semi colon. concatenated works the same as it does in python.
    */ 
 
-  const name = 'Ben'
+const name = 'Ben'
 let benCount = 0
 if (name === 'Ben') {
     benCount = 1
@@ -59,3 +59,50 @@ fruitCount[myFruit] = 2 // is also equivalent
   - Object items can be accessed with . notation, like Python properties/attributes.
   - Object items can also be accessed with square bracket notation, but must be quoted, or accessed with a variable. The equivalent of how you access items in a Python dict.
 */
+
+
+// VARIABLE SCOPING 
+const theNumber = 1
+let name = 'Ben'
+
+if (theNumber === 1) {
+  let name = 'Leo'
+  alert(name)
+}
+
+alert(name)
+
+/*
+When this (the above script) script run it will display two alerts, the first will say Leo and the second Ben. We are allowed to “redeclare” name inside the if body, because the variable name is “redeclared” only inside that block.
+
+
+
+Minor changes (to the above script) to see effect: 
+ */
+
+const theNumber = 1
+let name = 'Ben'
+
+if (theNumber === 1) {
+  name = 'Leo' // didnt declare name inside if body. just reassigned it.
+  alert(name)
+}
+
+alert(name)
+/*
+In this case (the above), both alerts will say Leo, as the variable name is being reassigned in the outer scope, as it doesn’t exist in the inner scope (inside the if body).
+
+Next Change:
+*/
+
+const theNumber = 1
+
+if (theNumber === 1) {
+  let name = 'Leo' // only define name in the inner scope
+  alert(name)
+}
+
+alert(name)
+/*
+In this example (the above), the first alert will show Leo and the second will show an empty alert because the name variable is no longer assigned in the outer scope.
+ */
