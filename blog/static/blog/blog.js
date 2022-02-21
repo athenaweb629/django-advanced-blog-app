@@ -1,56 +1,42 @@
-// [Experiment 1] - Variables and their scopes (base code)
-
-const theNumber = 1
-let name = 'Hello!' // Second msg
-
-if (theNumber === 1) {
-  let name = 'Welcome to Blango' // First msg
-  alert(name)
-}
-
-alert(name) 
+// Console Logging 
 
 
 
-/* [Experiment 2] - Change let name = 'Leo' to just name = 'Leo'
+/* 
+NOTE: console is a global variable, log() is a method of console;
 
-const theNumber = 1
-let name = 'Ben' // Msg never shows
+                console.log('Hello, world')
 
-if (theNumber === 1) {
-  name = 'Leo' // Msg shows twice in two separate alerts
-  alert(name)
-}
+But there are some other methods that are also useful:
 
-alert(name)
+- error(): Output a message at error level.
+
+- warn(): Output a message at warning level.
+
+- count(): Called with a label (e.g. console.count('foo')) and will output a count of how many times it has been called with that label.
+
+- time(): Called with a name to start a named timer. (e.g. console.time('myTimer')), and then to output the time since the start, use…
+
+- timeEnd(): Call this with the same label to output the time, in milliseconds, since the corresponding time() method was called.
 */
 
-/* [Experiment 3] - Remove the name declaration from the outer(Outside of the 'IF' statement) scope.
+console.time('myTimer')
+console.count('counter1')
+console.log('A normal log message')
+console.warn('Warning: something bad might happen')
+console.error('Something bad did happen!')
+console.count('counter1')
+console.log('All the things above took this long to happen:')
+console.timeEnd('myTimer')
+
+/* 
+NOTE: The method of showing the JavaScript console depends on your browser and operating system.
 
 
-const theNumber = 1
-//let name = 'Ben' 
-// Ben is the name declaration in the outer scope
+- Chrome - On a Mac, it can be found under the View menu, then Developer, then JavaScript Console. On Windows, click on Tools and then Developer Tool. In the developer tools, you can click on the Console tab. You can also press the F12 key.
 
-if (theNumber === 1) {
-  let name = 'Leo' // Two msg alerts. first says leo. second is blank / empty.
-  alert(name)
-}
+- Firefox - On a Mac, it can be found under the Tools menu, go to Browser Tools then Web Developer Tools. Then, select the Console tab. On Windows, click on Web Development and then Web Console. You can also press the F12 key.
 
-alert(name)
-*/
+- In Safari, you’ll need to enable the Develop menu. In the Safari preferences, select the Advanced tab then check Show Develop menu in the menu bar. Once you’ve done that, just choose Show JavaScript Console from the Develop menu.
 
-
-
-/* [Experiment 4] - Change theNumber to something other than 1 so that (the) 'if' body is not executed.
-
-const theNumber = 1
-let name = 'Ben' // One alert message with 'Ben"
-
-if (theNumber === 2) {
-  let name = 'Leo' // No second alert and no msg with 'leo'
-  alert(name)
-}
-
-alert(name)
 */
