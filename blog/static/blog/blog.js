@@ -32,11 +32,5 @@ class Greeter {
   }
 }
 
-// The other methods are: getGreeting(), which will build the greeting string based on the name that was passed to the constructor; and showGreeting(), which is just a wrapper around console.log(). It could be overridden in a child class to output the message in another way (maybe in an alert()). Note that the methods don’t need to be preceded with function or use the => operator, the interpreter can deduce that they’re methods because they have parentheses at the end of their identifier.
-
-// Here’s how the class is instantiated and used:
-
-const g = new Greeter('Patchy')
-g.greet()
-
-// This will output Hello, Patchy to the console, by calling greet() which calls showGreeting() with the result of getGreeting().
+const g = new Greeter('Patchy')  // g = Greeter("Patchy")
+g.greet() // g.greet() - these are the same in py and js
