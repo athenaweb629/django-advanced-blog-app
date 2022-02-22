@@ -37,28 +37,8 @@ class Greeter {
 const g = new Greeter('Patchy')  // g = Greeter("Patchy")
 g.greet() // g.greet() - these are the same in py and js
 
-
-
-class DelayedGreeter extends Greeter {
-
-} // 'extends' in js is equiv to 'DelayedGreeter(Greeter)' in py
-
-
-// Let’s override the constructor, so as well as providing a name, we can also provide an optional delay. We’ll make use of super(), a special function that calls the method in which it’s used on the superclass. It’s similar to the super() method in Python, but not as explicit in its behavior:
-
-class DelayedGreeter extends Greeter {
-  constructor (name, delay) {
-    super(name)
-    if (delay !== undefined) {
-      this.delay = delay
-    }
-  }
-}
-
-
-// Here, super(name) calls the constructor() method on Greeter, with the name argument. We then set this.delay to the delay argument, if it’s passed in.
-// If it’s not passed in, then what will delay be? Currently, it’s undefined, but we can fix that by setting an attribute. Like in Python, attributes are just set in the class body. Here, we’ll set delay to a default of 2000, or 2 seconds:
-
+// CONSOLE OUTPUT: 
+// blog.js:29 Hello, Patchy
 
 class DelayedGreeter extends Greeter {
   delay = 2000
@@ -70,11 +50,6 @@ class DelayedGreeter extends Greeter {
     }
   }
 
-// Finally we’ll override the greet() method to use setTimeout() and greet after a delay.
-
-  class DelayedGreeter extends Greeter {
-  // other methods/attribute omitted
-
   greet () {
     setTimeout(
       () => {
@@ -84,18 +59,12 @@ class DelayedGreeter extends Greeter {
   }
 }
 
+const dg2 = new DelayedGreeter('Patchy 2 Seconds')
+dg2.greet()
 
-// Here we’ve used an arrow function, instead of a function defined with the function keyword, like this:
+const dg1 = new DelayedGreeter('Patchy 1 Second', 1000)
+dg1.greet()
 
-setTimeout(
-  function() {
-    this.showGreeting(this.getGreeting())
-  }, this.delay
-)
-
-
-
-
-
-// When using “traditional” functions (arrow functions are relatively new to JavaScript), the context in which the function executes changes. The upshot is that this, inside a function, no longer refers to the class instance. Instead it refers to the function itself. If we call this.showGreeting() it will fail as the function doesn’t have a showGreeting() method.
-// Using an arrow function avoids this problem, and the function executes in the context you expect with 'this' referring to the class instance. All browsers released in the last few years support arrow function so you should prefer to use them unless you have a good reason not to.
+// CONSOLE OUTPUT: 
+// blog.js:29 Hello, Patchy 1 Second
+// blog.js:29 Hello, Patchy 2 Seconds
