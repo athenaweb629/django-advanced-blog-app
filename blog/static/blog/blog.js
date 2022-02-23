@@ -1,70 +1,29 @@
-// JavaScript Classes - Inheritance, Attributes, and Arrow Functions
+// JavaScript Promises 
+/* 
+The purpose of promises is to provide a method of performing asynchronous code, or running code in the background. Since JavaScript doesn’t have a threading model, this accomplished with callbacks.
 
-// Note - Unlike Python classes, they can only inherit from one super class
+They do this with a consistent interface that allows a promise to be resolved (complete successfully) or (optionally) rejected (fail). In the last part of this module, we’re going to use promises when we fetch data from our API. The data fetching will happen in the background and our callback function will be executed when the data is received.
 
-// The constructor method is called 'constructor', and is the equivalent of Python’s '__init__'. 
+All the callbacks that are needed
 
-// When instantiating a class, you must use the new keywords, you can’t just “call” the class as you do in Python.
+Promise Construction - need atleast 2, sometimes 3 functions to implement a promise.
 
-// To access the current object from within the class, the keyword 'this' is used. It’s the equivalent of self in Python, but is implicit, i.e. this is not passed to every method like self is.
+The first is the function that actually does the work. Rather than return a result, the worker function will call a function with the result, to “resolve” the promise. If there’s a failure in the worker function, then it might also be able to “reject” the promise.
 
-// inheritance is denoted with the 'extends' keyword.
 
-class Greeter {
-  // def __init__(self, name='no name'):
-  constructor (name) {
-    this.name = name
-  }
 
-  getGreeting () {
-    if (this.name === undefined) {
-      return 'Hello, no name'
-    }
+In this example, we’ll create a lazyAdder function. It will add two numbers together. It will not return the result, but resolve it. If there is a problem with the arguments, like they are not numbers, it will reject the promise. Note that this code is not asynchronous but does have the same interface as what would be used in an asynchronous promise.
+*/
 
-    return 'Hello, ' + this.name
-  }
-  // return f'Hello, {self.name}'
-
-  showGreeting (greetingMessage) {
-    console.log(greetingMessage)
-  }
-  // The main “entrypoint” to the class - greet()
-  greet () {
-    this.showGreeting(this.getGreeting())
-  }
-}
-
-const g = new Greeter('Patchy')  // g = Greeter("Patchy")
-g.greet() // g.greet() - these are the same in py and js
-
-// CONSOLE OUTPUT: 
-// blog.js:29 Hello, Patchy
-
-class DelayedGreeter extends Greeter {
-  delay = 2000
-
-  constructor (name, delay) {
-    super(name)
-    if (delay !== undefined) {
-      this.delay = delay
+const lazyAdd = function (a, b) {
+  const doAdd = (resolve, reject) => {
+    if (typeof a !== "number" || typeof b !== "number") {
+      reject("a and b must both be numbers")
+    } else {
+      const sum = a + b
+      resolve(sum)
     }
   }
 
-  greet () {
-    setTimeout(
-      () => {
-        this.showGreeting(this.getGreeting())
-      }, this.delay
-    )
-  }
+  return new Promise(doAdd)
 }
-
-const dg2 = new DelayedGreeter('Patchy 2 Seconds')
-dg2.greet()
-
-const dg1 = new DelayedGreeter('Patchy 1 Second', 1000)
-dg1.greet()
-
-// CONSOLE OUTPUT: 
-// blog.js:29 Hello, Patchy 1 Second
-// blog.js:29 Hello, Patchy 2 Seconds
