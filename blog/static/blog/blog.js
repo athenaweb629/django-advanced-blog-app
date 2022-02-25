@@ -37,3 +37,4 @@ ReactDOM.render(
   React.createElement(ClickButton),
   domContainer
 )
+// side note - button disables after 2 clicks
