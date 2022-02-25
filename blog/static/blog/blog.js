@@ -29,3 +29,5 @@ class ClickButton extends React.Component {
     )
   }
 }
+// Remember that since you are including the blog.js file in your template after the React scripts, you will have access to the React variable automatically.
+// The /post-table/ page still won’t change as there’s one last thing we need to do: mount the component into the container. Let’s see how to do that now.
