@@ -1,23 +1,20 @@
 {% extends "base.html" %}
 {% load static %}
-{# ReactJS https://reactjs.org/ #}
-{# In JavaScript, variables and functions defined in script files or in <script> elements are accessible by subsequent JavaScript code further down the page (assuming they are in the global scope). This means we must include the ReactJS scripts in an HTML page, and then our scripts further down the page, and we can then access the ReactJS methods in our own JavaScript file. #}
+<!-- ReactJS https://reactjs.org/ -->
 
 {% block content %}
-    <script src="{% static "blog/blog.js" %}"></script>
-    {# Needs an ID so we can find it and react will populate dynamically. #}
-    <div id="react_root"></div>
-
-{# ReactJS files are hosted for devs to include on their own page#}
-{# Include script tags to use, #}
+<div class="row">
+    <div class="col">
+      <!-- root react element -->
+        <div id="react_root"></div>
+    </div>
+</div>
+<!-- ReactJS Script tags -->
 <script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
 <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
 
-
-{# When Going to production, use the production version of the scripts 
-by replacing 'development' with 'production.min' #}
-
+<!-- Javascript includes blog.js -->
+<script src="{% static "blog/blog.js" %}"></script>
 
 {% endblock %}
-
 
