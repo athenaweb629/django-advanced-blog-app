@@ -1,3 +1,5 @@
+// JSX Intro
+
 class ClickButton extends React.Component {
   state = {
     wasClicked: false
@@ -9,7 +11,9 @@ class ClickButton extends React.Component {
     )
   }
 
-  render () {
+
+  // Updated to return JSX instead of using React.createElement()
+   render () {
     let buttonText
 
     if (this.state.wasClicked)
@@ -17,19 +21,17 @@ class ClickButton extends React.Component {
     else
       buttonText = 'Click Me'
 
-    return React.createElement(
-      'button',
-      {
-        className: 'btn btn-primary mt-2',
-        onClick: () => {
+    return <button
+      className="btn btn-primary mt-2"
+      onClick={
+        () => {
           this.handleClick()
         }
-      },
-      buttonText
-    )
+      }
+    >
+      {buttonText}
+    </button>
   }
-}
-
 // Mounting a Component
 
 const domContainer = document.getElementById('react_root')
