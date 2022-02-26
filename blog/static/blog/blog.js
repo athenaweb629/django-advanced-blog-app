@@ -1,30 +1,4 @@
-// JSX Intro
-
-class ClickButton extends React.Component {
-  state = {
-    wasClicked: false
-  }
-
-  handleClick () {
-    this.setState({wasClicked: true})
-  }
-
-  render () {
-    return <button
-      className="btn btn-primary mt-2"
-      onClick={() => {this.handleClick()}}
-      disabled={this.state.wasClicked}>
-      {this.state.wasClicked ? 'Clicked!' : 'Click Me'}
-    </button>
-  }
-}
-
-const domContainer = document.getElementById('react_root')
-ReactDOM.render(
-  React.createElement(ClickButton),
-  domContainer
-)
-// side note - button disables after 1 click
+// Updated for JSX
 class PostRow extends React.Component {
   render () {
     const post = this.props.post
@@ -62,7 +36,7 @@ class PostTable extends React.Component {
           ],
           'hero_image': {
             'thumbnail': '/media/__sized__/hero_images/snake-419043_1920-thumbnail-100x100-70.jpg',
-            'full_size': '/media/hero_images/snake-419043_1920.jpg'
+            'full_size': '/media/hero_images/n384_w1150_5974969766_o.jpg'
           },
           title: 'Test Post',
           slug: 'test-post',
