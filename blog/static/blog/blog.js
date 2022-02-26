@@ -42,6 +42,7 @@ ReactDOM.render(
 // side note - button disables after 2 clicks
 
 
+// Represents one row in the table. 
 class PostRow extends React.Component {
   render () {
     const post = this.props.post
@@ -64,5 +65,31 @@ class PostRow extends React.Component {
       <td>{post.summary}</td>
       <td><a href={'/post/' + post.slug + '/'}>View</a></td>
     </tr>
+  }
+}
+
+
+// Intended to be responsible for fetching the data and then passing each Post thats recieved to a PostRow Component to render inside a table
+// NOTE - Hard Coded for Testing 
+class PostTable extends React.Component {
+  state = {
+    dataLoaded: true,
+    data: {
+      results: [
+        {
+          id: 1,
+          tags: [
+            'django', 'react'
+          ],
+          'hero_image': {
+            'thumbnail': '/media/__sized__/hero_images/snake-419043_1920-thumbnail-100x100-70.jpg',
+            'full_size': '/media/hero_images/snake-419043_1920.jpg'
+          },
+          title: 'Test Post',
+          slug: 'test-post',
+          summary: 'A test post, created for Django/React.'
+        }
+      ]
+    }
   }
 }
