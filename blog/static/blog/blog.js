@@ -92,4 +92,36 @@ class PostTable extends React.Component {
       ]
     }
   }
+  render () {
+    let rows
+    if (this.state.dataLoaded) {
+      if (this.state.data.results.length) {
+        rows = this.state.data.results.map(post => <PostRow post={post}/>)
+      } else {
+        rows = <tr>
+          <td colSpan="6">No results found.</td>
+        </tr>
+      }
+    } else {
+      rows = <tr>
+        <td colSpan="6">Loading&hellip;</td>
+      </tr>
+    }
+
+    return <table className="table table-striped table-bordered mt-2">
+      <thead>
+      <tr>
+        <th>Title</th>
+        <th>Image</th>
+        <th>Tags</th>
+        <th>Slug</th>
+        <th>Summary</th>
+        <th>Link</th>
+      </tr>
+      </thead>
+      <tbody>
+      {rows}
+      </tbody>
+    </table>
+  }
 }
