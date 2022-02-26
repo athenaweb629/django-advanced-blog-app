@@ -1,4 +1,13 @@
 // Fetch & React Hooks
+
+/* This will fetch three URLS: 
+
+- 'api/v1/posts/' - will output valid date to the console. 
+
+- '/' - will return a 200 status code since it exists but will fail JSON decode
+
+- '/abadurl/' - will return a 404 and trigger exception
+*/
 ['/api/v1/posts/', '/', '/abadurl/'].forEach(url => {
   fetch(url).then(response => {
     if (response.status !== 200) {
