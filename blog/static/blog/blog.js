@@ -6,33 +6,18 @@ class ClickButton extends React.Component {
   }
 
   handleClick () {
-    this.setState(
-      {wasClicked: true}
-    )
+    this.setState({wasClicked: true})
   }
 
-
-  // Updated to return JSX instead of using React.createElement()
   render () {
-    let buttonText
-
-    if (this.state.wasClicked)
-      buttonText = 'Clicked!'
-    else
-      buttonText = 'Click Me'
-
     return <button
       className="btn btn-primary mt-2"
-      onClick={
-        () => {
-          this.handleClick()
-        }
-      }
-    >
-      {buttonText}
+      onClick={() => {this.handleClick()}}
+      disabled={this.state.wasClicked}>
+      {this.state.wasClicked ? 'Clicked!' : 'Click Me'}
     </button>
   }
-// Mounting a Component
+}
 
 const domContainer = document.getElementById('react_root')
 ReactDOM.render(
@@ -42,7 +27,6 @@ ReactDOM.render(
 // side note - button disables after 2 clicks
 
 
-// Represents one row in the table. 
 class PostRow extends React.Component {
   render () {
     const post = this.props.post
@@ -58,7 +42,7 @@ class PostRow extends React.Component {
     return <tr>
       <td>{post.title}</td>
       <td>
-        { thumbnail }
+        {thumbnail}
       </td>
       <td>{post.tags.join(', ')}</td>
       <td>{post.slug}</td>
@@ -68,16 +52,13 @@ class PostRow extends React.Component {
   }
 }
 
-
-// Intended to be responsible for fetching the data and then passing each Post thats recieved to a PostRow Component to render inside a table
-// NOTE - Hard Coded for Testing 
 class PostTable extends React.Component {
   state = {
     dataLoaded: true,
     data: {
       results: [
         {
-          id: 1,
+          id: 15,
           tags: [
             'django', 'react'
           ],
@@ -92,11 +73,12 @@ class PostTable extends React.Component {
       ]
     }
   }
+
   render () {
     let rows
     if (this.state.dataLoaded) {
       if (this.state.data.results.length) {
-        rows = this.state.data.results.map(post => <PostRow post={post}/>)
+        rows = this.state.data.results.map(post => <PostRow post={post} key={post.id}/>)
       } else {
         rows = <tr>
           <td colSpan="6">No results found.</td>
@@ -125,3 +107,9 @@ class PostTable extends React.Component {
     </table>
   }
 }
+
+const domContainer = document.getElementById('react_root')
+ReactDOM.render(
+  React.createElement(PostTable),
+  domContainer
+)
