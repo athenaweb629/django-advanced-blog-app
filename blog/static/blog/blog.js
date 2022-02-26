@@ -113,116 +113,36 @@ ReactDOM.render(
   domContainer
 )
 
-// Fetch Intro
-/* https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
-
-- fetch() is a function built into all modern browsers that preforms HTTP Requests. 
-
-- It takes two arguments, the URL and the second is not mandetory and contains all options for the request.
-
-Examples:
- GET         
-          fetch('/api/v1/posts/')
-
- POST          
-          fetch('/api/v1/posts/', {
-            method: 'POST',
-            body: data
-          })
-Since Fetch is promise based, a callback function to then 'then()' will need to be provided. It deals with the response, and is done by calling json().
-
-fetch('/api/v1/posts/').then(response => {
-  return response.json()
-})
-
-Is the JSON data now returned from the function? No, the json() method actually returns another Promise. Luckily, we can chain promises together so that our source code doesn’t get to unwieldy:
+// React Component Events 
+/*
+Throughout the lifecycle of a React component, the React library will call a few methods on it as events take place. You can implement these methods on your Component classes and hook into these events. The three most common methods are, componentDidMount(), componentDidUpdate() and componentWillUnmount().
 
 
-fetch('/api/v1/posts/').then(response => {
-  return response.json()
-}).then(data  => {
-  // do something with data, for example
-  console.log(data)
-})
+componentDidMount
+This takes no arguments, and is called right after the component is inserted into the DOM. You could use this to perform any setup of the component that’s not appropriate to do in the constructor() method. For example, we’re going to use it to start the fetch from the Post API.
 
 
-
-Like in Python, JS has try / catch / finally error handling. 
-
-
-In Python - 
-
-
-try:
-    raise Exception("Something went wrong")
-except TypeError as e:
-    print("Got type error", e)
-except Exception as e:
-    print("Got Exception", e)
-finally:
-    print("This is always called")
+componentDidUpdate
+This method is called when the properties being passed to a component change. This would happen when the parent component re-renders and passes a different value for a property to the child component. For example, if the PostTable component re-renders and passes a different post property to a PostRow, then componentDidUpdate will be called on the PostRow component.
+componentDidUpdate is passed three arguments:
+prevProps: The props object that the component had prior to being updated, i.e. the new properties are in this.props and the ones being used before are in prevProps.
 
 
-
-Equivalent in JavaScript -
-
-try {
-  throw new Error('Something went wrong)
-} catch(e) {
-  if (e instanceof TypeError) {
-    console.log('Got type error')
-    console.log(e)
-  } else {
-    console.log('Got Exception')
-    console.log(e)
+prevState: The state object that the component had prior to being updated, i.e. this.state is the new state and prevState the previous one.
+snapshot: This is the result of the getSnapshotBeforeUpdate() method, which is invoked just before the rendered component is updated in the DOM. Normally you wouldn’t implement getSnapshotBeforeUpdate() as you can get the changes by comparing using prevProps and prevState. For this reason, snapshot will be null.
+You can use componentDidUpdate() to check if properties you care about have changed, and then prevent extra function calls or network requests from taking place if they haven’t.
+For example, we might have a PostEdit component that accepts multiple properties, including a postId. We only want to fetch the Post detail data if the postId changes, not if another property changes. We could write a componentDidUpdate() to do the check like this:
+componentDidUpdate (prevProps, prevState) {
+  if (prevProps.postId !== this.props.postId) {
+    this.fetchPostData()
   }
-} finally {
-  console.log('This is always called')
 }
 
 
+componentWillUnmount
+This is called directly before the component unmounts (is removed from the DOM). When called, the component is still attached to the DOM. You could use this method to cancel any promises that are outstanding, for example, stopping an ongoing network request.
+Other Methods
+There are also a few other lifecycle methods that are called, which are rarely used, such as getSnapshotBeforeUpdate(), which we already mentioned. If you find that the three methods above don’t cater to all your needs, you can read about the others at the Rarely Used Lifecycle Methods documentation.
 
-Fairly similar. Slight differences.
-- 'throw' instead of 'raise'
-- 'catch' innstead of 'except'
-- different exception classes
-- also JS doesnt have the ability to have different handlers for different exceptions. Theres one handler and one needs to check the exception class to decide how to handle it.
-
-
-
-Handling exceptionns in promise code is a bit different. Instead of wrapping the promise in a try/catch block, we use a new method on the Promise class called 'catch()'. To this, a callback will be passed whenever an exception is raised anywhere along the promise chain.
-
-To add exception handling to a fetch() and JSON decoding chain, catch() needs to be called at the end: 
-
-fetch('/api/v1/posts/').then(response => {
-  return response.json()
-}).then(data  => {
-  // do something with data, for example
-  console.log(data)
-}).catch(e => {
-  console.error(e)
-})
-
-
-
-Here’s how we could add an exception on a non-200 response:
-
-fetch('/api/v1/posts/').then(response => {
-  if (response.status !== 200) {
-    throw new Error('Invalid status from server: ' + response.statusText)
-  }
-
-  return response.json()
-}).then(data  => {
-  // do something with data, for example
-  console.log(data)
-}).catch(e => {
-  console.error(e)
-})
-
-
-
-
-*/
-
-
+https://reactjs.org/docs/react-component.html#rarely-used-lifecycle-methods
+ */
