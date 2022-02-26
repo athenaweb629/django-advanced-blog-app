@@ -1,5 +1,6 @@
 from django.shortcuts import redirect, render, get_object_or_404
 from django.utils import timezone
+from django.urls import reverse
 
 from blog.models import Post
 from blog.forms import CommentForm
@@ -57,4 +58,7 @@ def post_detail(request, slug):
 
 
 def post_table(request):
-    return render(request, "blog/post-table.html")
+    # Updated to include reversed post-list 
+    return render(
+        request, "blog/post-table.html", {"post_list_url": reverse("post-list")}
+    )

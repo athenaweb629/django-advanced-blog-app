@@ -58,7 +58,7 @@ class PostTable extends React.Component {
   }
 
   componentDidMount () {
-    fetch('/api/v1/posts/').then(response => {
+    fetch(this.props.url).then(response => {
       if (response.status !== 200) {
         throw new Error('Invalid status from server: ' + response.statusText)
       }
@@ -116,7 +116,10 @@ class PostTable extends React.Component {
 
 const domContainer = document.getElementById('react_root')
 ReactDOM.render(
-  React.createElement(PostTable),
+  React.createElement(
+    PostTable,
+    {url: postListUrl}
+    ),
   domContainer
 )
 
