@@ -24,9 +24,7 @@ ReactDOM.render(
   React.createElement(ClickButton),
   domContainer
 )
-// side note - button disables after 2 clicks
-
-
+// side note - button disables after 1 click
 class PostRow extends React.Component {
   render () {
     const post = this.props.post
@@ -113,3 +111,4 @@ ReactDOM.render(
   React.createElement(PostTable),
   domContainer
 )
+
