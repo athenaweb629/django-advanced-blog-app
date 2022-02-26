@@ -9,12 +9,14 @@
         <div id="react_root"></div>
     </div>
 </div>
+<!-- Babel -->
+<script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
 <!-- ReactJS Script tags -->
 <script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
 <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
 
 <!-- Javascript includes blog.js -->
-<script src="{% static "blog/blog.js" %}"></script>
+<script type="text/babel" src="{% static "blog/blog.js" %}"></script>
 
 {% endblock %}
 
