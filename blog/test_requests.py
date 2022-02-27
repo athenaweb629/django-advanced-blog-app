@@ -5,7 +5,7 @@ response = requests.get("https://jsonplaceholder.typicode.com/posts/1")
 
 
 
-
+# https://docs.python-requests.org/en/latest/user/advanced/#request-and-response-objects
 # TO DO - put credentials here
 EMAIL_ADDRESS = "testuserexample@blango.com"
 PASSWORD = "example_password"
