@@ -34,7 +34,7 @@ pycparser==2.20
 pycrypto==2.6.1
 Pygments==2.11.2
 PyGObject==3.26.1
-PyJWT==2.1.0
+PyJWT==2.4.0
 python-apt==1.6.5+ubuntu0.3
 python3-openid==3.2.0
 pytz==2021.1
